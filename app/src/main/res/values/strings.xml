@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">EcoSemente</string>
+    <string name="btn_seed">Seed</string>
+    <string name="btn_buyer">Buyer</string>
+    <string name="btn_sale">Sale</string>
+    <string name="seedName">Seed Name</string>
+    <string name="quantity">Quantity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_bottom_bar_home">Home</string>
+    <string name="menu_bottom_bar_search">Search</string>
+    <string name="menu_bottom_bar_report">Report</string>
+    <string name="menu_bottom_bar_account">Account</string>
+</resources>

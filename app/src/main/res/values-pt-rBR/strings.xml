@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EcoSemente</string>
+    <string name="btn_seed">Semente</string>
+    <string name="btn_buyer">Comprador</string>
+    <string name="btn_sale">Venda</string>
+    <string name="seedName">Nome da Semente</string>
+    <string name="quantity">Quantidade</string>
+    <string name="menu_bottom_bar_home">Home</string>
+    <string name="menu_bottom_bar_search">Pesquisa</string>
+    <string name="menu_bottom_bar_report">Relatório</string>
+    <string name="menu_bottom_bar_account">Conta</string>
+</resources>
