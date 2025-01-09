@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bottomNavigation.HomeFragment">
+    tools:context=".bottomNavigation.HomeFragment"
+    android:padding="0dp"
+    android:layout_margin="0dp"
+    android:fitsSystemWindows="false">
 
     <!-- Botões e outros elementos -->
 

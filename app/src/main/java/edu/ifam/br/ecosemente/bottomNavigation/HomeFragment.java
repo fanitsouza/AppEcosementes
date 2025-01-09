@@ -1,5 +1,6 @@
 package edu.ifam.br.ecosemente.bottomNavigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.ifam.br.ecosemente.ListSemente;
 import edu.ifam.br.ecosemente.R;
 
 /**
@@ -55,6 +57,10 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        public void vaiparaSemente (View view){
+            Intent intent = new Intent(this, ListSemente.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -63,4 +69,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
+
 }

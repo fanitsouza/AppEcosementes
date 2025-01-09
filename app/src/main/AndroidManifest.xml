@@ -13,11 +13,13 @@
         android:theme="@style/Theme.EcoSemente"
         tools:targetApi="31">
         <activity
-            android:name=".detalheSemente"
+            android:name=".ListSemente"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

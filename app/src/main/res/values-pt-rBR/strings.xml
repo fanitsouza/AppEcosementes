@@ -10,4 +10,7 @@
     <string name="menu_bottom_bar_search">Pesquisa</string>
     <string name="menu_bottom_bar_report">Relatório</string>
     <string name="menu_bottom_bar_account">Conta</string>
+    <string name="seed_name">Nome da Semente</string>
+    <string name="tv_seed_list">Lista de Sementes</string>
+    <string name="addSeed">Adicionar Semente</string>
 </resources>
