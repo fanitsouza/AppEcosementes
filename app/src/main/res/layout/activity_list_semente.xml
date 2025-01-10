@@ -33,6 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/semente_menu"
         app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/green"
         />
 
     <androidx.recyclerview.widget.RecyclerView

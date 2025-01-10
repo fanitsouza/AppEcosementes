@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_home"
+    <item android:id="@+id/menuSementehome"
         android:title="@string/menu_bottom_bar_home"
         android:icon="@drawable/ic_menu_home"/>
-    <item android:id="@+id/menu_search"
+    <item android:id="@+id/menuSementeSearch"
         android:title="@string/menu_bottom_bar_search"
         android:icon="@drawable/ic_menu_search"/>
     <item android:id="@+id/menu_report"

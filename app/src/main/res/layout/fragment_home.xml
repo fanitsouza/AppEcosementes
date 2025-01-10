@@ -9,11 +9,11 @@
     android:layout_margin="0dp"
     android:fitsSystemWindows="false">
 
-    <!-- Botões e outros elementos -->
+
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_seed"
+        android:id="@+id/btnSemente"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="64dp"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_seed" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSemente" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -10,7 +10,15 @@
     <string name="menu_bottom_bar_search">Search</string>
     <string name="menu_bottom_bar_report">Report</string>
     <string name="menu_bottom_bar_account">Account</string>
-    <string name="seed_name">Seed Name</string>
+    <string name="seed_name">Seed\'s Name</string>
     <string name="tv_seed_list">Seed List</string>
     <string name="addSeed">Add Seed</string>
+    <string name="seed_description">Seed\'s Description</string>
+    <string name="species_seed">Seed\'s Species</string>
+    <string name="planting_time">Planting Time</string>
+    <string name="average_time">Average Time to Harvest</string>
+    <string name="care">Care</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_clean">Clean</string>
+    <string name="btn_delete">Delete</string>
 </resources>

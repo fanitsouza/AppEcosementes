@@ -71,13 +71,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Encontre a View que será clicada
-        View button = view.findViewById(R.id.btn_seed);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vaiparaSemente();
-            }
-        });
+        View button = view.findViewById(R.id.btnSemente);
+        button.setOnClickListener(v -> vaiparaSemente());
 
         return view;
 

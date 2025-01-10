@@ -13,4 +13,12 @@
     <string name="seed_name">Nome da Semente</string>
     <string name="tv_seed_list">Lista de Sementes</string>
     <string name="addSeed">Adicionar Semente</string>
+    <string name="seed_description">Descrição da Semente</string>
+    <string name="species_seed">Espécie da Semente</string>
+    <string name="planting_time">Época de Plantio</string>
+    <string name="average_time">Tempo Médio para Colheita</string>
+    <string name="care">Cuidados</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_clean">Limpar</string>
+    <string name="btn_delete">Excluir</string>
 </resources>

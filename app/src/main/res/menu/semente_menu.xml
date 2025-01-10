@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_home"
+    <item android:id="@+id/menuSementehome"
         android:title="@string/menu_bottom_bar_home"
         android:icon="@drawable/ic_menu_home"/>
-    <item android:id="@+id/menu_search"
+    <item android:id="@+id/menuSementeSearch"
         android:title="@string/menu_bottom_bar_search"
         android:icon="@drawable/ic_menu_search"/>
-    <item android:id="@+id/menu_addSemente"
-        android:title="@string/addSeed"
-        android:icon="@drawable/ic_menu_add"/>
+    <item
+        android:id="@+id/menuAddSemente"
+        android:icon="@drawable/ic_menu_add"
+        android:onClick="vaiParaAdicionarSemente"
+        android:title="@string/addSeed" />
 </menu>

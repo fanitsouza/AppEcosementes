@@ -2,9 +2,6 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EcoSemente" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/green</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">false</item>
 
     </style>
 </resources>

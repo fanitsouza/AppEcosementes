@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalheSemente"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_add_semente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:text="@string/addSeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_add_semente">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- EditText adicionado aqui -->
+            <EditText
+                android:id="@+id/etDetalheSementeNomeSemente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/seed_name"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green"
+                android:layout_margin="16dp" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeDescricaoSemente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/seed_description"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeEspecieSemente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/species_seed"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeEpocaPlantio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/planting_time"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeTempoMedio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/average_time"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeQuantidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/quantity"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:id="@+id/etDetalheSementeCuidados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/care"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/btnLimpar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/btn_clean" />
+
+                <Button
+                    android:id="@+id/btnConfirmar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/white"
+                    android:text="@string/btn_confirm" />
+                <Button
+                    android:id="@+id/btnDeletar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/white"
+                    android:text="@string/btn_confirm" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
