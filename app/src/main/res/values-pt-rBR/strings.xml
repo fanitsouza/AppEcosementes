@@ -21,4 +21,6 @@
     <string name="btn_confirm">Confirmar</string>
     <string name="btn_clean">Limpar</string>
     <string name="btn_delete">Excluir</string>
+    <string name="seedNameLabel">"Semente: "</string>
+    <string name="seedQuantityLabel">"Qtd: "</string>
 </resources>

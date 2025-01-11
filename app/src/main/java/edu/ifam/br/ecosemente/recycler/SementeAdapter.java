@@ -1,21 +1,28 @@
-/*package edu.ifam.br.ecosemente.recycler;
+package edu.ifam.br.ecosemente.recycler;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import edu.ifam.br.ecosemente.DetalheSemente;
+import edu.ifam.br.ecosemente.R;
 import edu.ifam.br.ecosemente.entity.Semente;
 
 public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeViewHolder> {
     private List<Semente> sementes;
     private Context context;
 
-    public FornecedorAdapter(List<Semente> fornecedores, Context context) {
-        this.sementes = fornecedores;
+    public SementeAdapter(List<Semente> sementes, Context context) {
+        this.sementes = sementes;
         this.context = context;
     }
 
@@ -23,20 +30,20 @@ public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeV
     @Override
     //Cria a ligação com layout que ira conter o Linear Layout com as informações do fornecedor
     public SementeAdapter.SementeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fornecedor, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_semente, parent, false);
         return new SementeViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SementeAdapter.SementeViewHolder holder, int position) {
-        Fornecedor fornecedor = sementes.get(position);
-        holder.tvCodigo.setText(holder.tvCodigo.getText().toString() + " " + String.valueOf(fornecedor.getCodigo()));
-        holder.tvNome.setText(holder.tvNome.getText().toString() + " " + fornecedor.getNome());
+        Semente semente = sementes.get(position);
+        holder.itv_nomeSemente.setText(holder.itv_nomeSemente.getText().toString() + " " + semente.getNome());
+        holder.itv_quantidadeSemente.setText(holder.itv_quantidadeSemente.getText().toString() + " " + semente.getQuantidade());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, FornecedorDetalhesActivity.class);
-            intent.putExtra("id", fornecedor.getId());
+            Intent intent = new Intent(context, DetalheSemente.class);
+            intent.putExtra("id", semente.getId());
             context.startActivity(intent);
         });
     }
@@ -47,13 +54,13 @@ public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeV
     }
 
     public static class SementeViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCodigo;
-        TextView tvNome;
+        TextView itv_nomeSemente;
+        TextView itv_quantidadeSemente;
 
         public SementeViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvCodigo = itemView.findViewById(R.id.tvCodigo);
-            tvNome = itemView.findViewById(R.id.tvNome);
+            itv_nomeSemente = itemView.findViewById(R.id.itv_nomeSemente);
+            itv_quantidadeSemente = itemView.findViewById(R.id.itv_quantidadeSemente);
         }
     }
-}*/
+}

@@ -135,9 +135,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/background_button"
-                    android:textColor="@color/white"
                     android:backgroundTint="@color/green"
-                    android:text="@string/btn_clean" />
+                    android:onClick="btnClearSementeOnClick"
+                    android:text="@string/btn_clean"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnDeletar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:onClick="btnDeleteSementeOnClick"
+                    android:text="@string/btn_delete"
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/btnConfirmar"
@@ -145,16 +156,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/background_button"
-                    android:textColor="@color/white"
-                    android:text="@string/btn_confirm" />
-                <Button
-                    android:id="@+id/btnDeletar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/background_button"
-                    android:textColor="@color/white"
-                    android:text="@string/btn_confirm" />
+                    android:text="@string/btn_confirm"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -21,4 +21,6 @@
     <string name="btn_confirm">Confirm</string>
     <string name="btn_clean">Clean</string>
     <string name="btn_delete">Delete</string>
+    <string name="seedNameLabel">Seed:</string>
+    <string name="seedQuantityLabel">Qty:</string>
 </resources>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuSementehome"
+    <item android:id="@+id/menuSementeListHome"
         android:title="@string/menu_bottom_bar_home"
+        android:onClick="retornaHome"
         android:icon="@drawable/ic_menu_home"/>
     <item android:id="@+id/menuSementeSearch"
         android:title="@string/menu_bottom_bar_search"
