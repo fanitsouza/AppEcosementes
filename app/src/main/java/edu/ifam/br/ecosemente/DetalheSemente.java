@@ -1,6 +1,7 @@
 package edu.ifam.br.ecosemente;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class DetalheSemente extends AppCompatActivity {
+
+    private EditText etNome;
+    private EditText etDescricao;
+    private EditText etEspecie;
+    private EditText etEpocaPlantio;
+    private EditText etTempoMedio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

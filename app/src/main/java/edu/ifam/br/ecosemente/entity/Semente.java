@@ -1,15 +1,12 @@
 package edu.ifam.br.ecosemente.entity;
 
-import java.time.Month;
-import java.util.List;
-
 public class Semente {
 
-    private int id;
+    private long id;
     private String nome;
     private String descricao;
     private String especie;
-    private List<Month> espocaPlantio;
+    private String epocaPlantio;
     private int tempoMedioColheita;
     private int quantidade;
     private String cuidado;
@@ -18,32 +15,32 @@ public class Semente {
     public Semente() {
     }
 
-    public Semente(String nome, String descricao, String especie, List<Month> espocaPlantio, int tempoMedioColheita, int quantidade, String cuidado) {
+    public Semente(String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado) {
         this.nome = nome;
         this.descricao = descricao;
         this.especie = especie;
-        this.espocaPlantio = espocaPlantio;
+        this.epocaPlantio = epocaPlantio;
         this.tempoMedioColheita = tempoMedioColheita;
         this.quantidade = quantidade;
         this.cuidado = cuidado;
     }
 
-    public Semente(int id, String nome, String descricao, String especie, List<Month> espocaPlantio, int tempoMedioColheita, int quantidade, String cuidado) {
+    public Semente(int id, String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.especie = especie;
-        this.espocaPlantio = espocaPlantio;
+        this.epocaPlantio = epocaPlantio;
         this.tempoMedioColheita = tempoMedioColheita;
         this.quantidade = quantidade;
         this.cuidado = cuidado;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,12 +68,12 @@ public class Semente {
         this.especie = especie;
     }
 
-    public List<Month> getEspocaPlantio() {
-        return espocaPlantio;
+    public String getEpocaPlantio() {
+        return epocaPlantio;
     }
 
-    public void setEspocaPlantio(List<Month> espocaPlantio) {
-        this.espocaPlantio = espocaPlantio;
+    public void setEpocaPlantio(String epocaPlantio) {
+        this.epocaPlantio = epocaPlantio;
     }
 
     public int getTempoMedioColheita() {
