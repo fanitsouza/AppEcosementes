@@ -26,8 +26,7 @@ public class ListSemente extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SementeAdapter sementeAdapter;
     private SementeDAO sementeDAO;
-    private BottomNavigationView bottomNavigationViewHome;
-    private MenuItem menuItemListSementeHome;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

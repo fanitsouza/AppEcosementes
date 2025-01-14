@@ -65,11 +65,14 @@ public class DetalheSemente extends AppCompatActivity {
         });
 
         btndelete.setVisibility(View.INVISIBLE);
+
         Intent intent = getIntent();
+
         if(intent.hasExtra("id")){
             btndelete.setVisibility(View.VISIBLE);
             id = intent.getLongExtra("id",0);
             setSemente(sementeDAO.getSemente(id));
+
             btnConfirmar.setOnClickListener(v -> {
                 sementeDAO.update(id, getSemente());
                 Toast.makeText(getApplicationContext(),"Semente Atualizada",
