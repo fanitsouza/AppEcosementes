@@ -23,4 +23,6 @@
     <string name="btn_delete">Excluir</string>
     <string name="seedNameLabel">"Semente: "</string>
     <string name="seedQuantityLabel">"Qtd: "</string>
+    <string name="price">Preço</string>
+    <string name="seedPriceLabel">Preço:</string>
 </resources>

@@ -1,6 +1,8 @@
-package edu.ifam.br.ecosemente.entity;
+package edu.ifam.br.ecosemente.dto;
 
-public class Semente {
+import edu.ifam.br.ecosemente.entity.Semente;
+
+public class SementeDTO {
 
     private long id;
     private String nome;
@@ -12,31 +14,23 @@ public class Semente {
     private String cuidado;
     private float preco;
 
-
-    public Semente() {
+    public SementeDTO() {
     }
 
-    public Semente(long id, String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado, float preco) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.especie = especie;
-        this.epocaPlantio = epocaPlantio;
-        this.tempoMedioColheita = tempoMedioColheita;
-        this.quantidade = quantidade;
-        this.cuidado = cuidado;
-        this.preco = preco;
+    public SementeDTO(Semente semente) {
+        this.id = semente.getId();
+        this.nome = semente.getNome();
+        this.descricao = semente.getDescricao();
+        this.especie = semente.getEspecie();
+        this.epocaPlantio = semente.getEpocaPlantio();
+        this.tempoMedioColheita = semente.getTempoMedioColheita();
+        this.quantidade = semente.getQuantidade();
+        this.cuidado = semente.getCuidado();
+        this.preco = semente.getPreco();
     }
 
-    public Semente(String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado, float preco) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.especie = especie;
-        this.epocaPlantio = epocaPlantio;
-        this.tempoMedioColheita = tempoMedioColheita;
-        this.quantidade = quantidade;
-        this.cuidado = cuidado;
-        this.preco = preco;
+    public Semente getSemente(){
+        return new Semente(id, nome, descricao, especie, epocaPlantio, tempoMedioColheita, quantidade, cuidado, preco);
     }
 
     public long getId() {

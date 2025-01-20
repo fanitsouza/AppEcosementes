@@ -25,6 +25,7 @@ public class DetalheSemente extends AppCompatActivity {
     private EditText etTempoMedio;
     private EditText etQuantidade;
     private EditText etCuidado;
+    private EditText etPreco;
     private Button btnConfirmar;
     private Button btndelete;
     private SementeDAO sementeDAO;
@@ -51,6 +52,7 @@ public class DetalheSemente extends AppCompatActivity {
         etTempoMedio = findViewById(R.id.etDetalheSementeTempoMedio);
         etQuantidade = findViewById(R.id.etDetalheSementeQuantidade);
         etCuidado = findViewById(R.id.etDetalheSementeCuidados);
+        etPreco = findViewById(R.id.etDetalheSementePreco);
 
         btnConfirmar = findViewById(R.id.btnConfirmar);
         btndelete = findViewById(R.id.btnDeletar);
@@ -93,6 +95,7 @@ public class DetalheSemente extends AppCompatActivity {
         semente.setTempoMedioColheita(Integer.parseInt(etTempoMedio.getText().toString()));
         semente.setQuantidade(Integer.parseInt(etQuantidade.getText().toString()));
         semente.setCuidado(etCuidado.getText().toString());
+        semente.setPreco(Float.parseFloat(etCuidado.getText().toString().replace(",",".")));
 
         return semente;
     }
@@ -105,6 +108,7 @@ public class DetalheSemente extends AppCompatActivity {
         etTempoMedio.setText(String.valueOf(semente.getTempoMedioColheita()));
         etQuantidade.setText(String.valueOf(semente.getQuantidade()));
         etCuidado.setText(semente.getCuidado());
+        etPreco.setText(String.valueOf(semente.getPreco()).replace(".",","));
     }
 
 

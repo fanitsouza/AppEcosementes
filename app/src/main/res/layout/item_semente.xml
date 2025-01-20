@@ -11,9 +11,10 @@
     android:background="@drawable/background_button">
 
     <TextView
-        android:id="@+id/itv_nomeSemente"
+        android:id="@+id/tv_nomeSemente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/seedNameLabel"
@@ -28,20 +29,35 @@
         app:layout_constraintVertical_bias="0.181" />
 
     <TextView
-        android:id="@+id/itv_quantidadeSemente"
+        android:id="@+id/tv_quantidadeSemente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
         android:text="@string/seedQuantityLabel"
+        android:textColor="@color/green"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_precoSemente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nomeSemente"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_precoSemente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/seedPriceLabel"
         android:textColor="@color/green"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itv_nomeSemente"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
     <ImageView
         android:id="@+id/imageView2"

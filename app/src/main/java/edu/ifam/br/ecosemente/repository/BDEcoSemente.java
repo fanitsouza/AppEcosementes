@@ -30,6 +30,11 @@ public class BDEcoSemente extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+        if (i < 2) { // Verifique a versão para garantir que a alteração seja executada apenas uma vez.
+            String alterTable = "ALTER TABLE semente ADD COLUMN preco NUMERIC";
+            sqLiteDatabase.execSQL(alterTable);
+        }
+
     }
 
 

@@ -93,7 +93,7 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/edit_text_shape"
                 android:hint="@string/average_time"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
@@ -105,7 +105,7 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/edit_text_shape"
                 android:hint="@string/quantity"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
@@ -121,6 +121,17 @@
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
+            <EditText
+                android:id="@+id/etDetalheSementePreco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/green"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

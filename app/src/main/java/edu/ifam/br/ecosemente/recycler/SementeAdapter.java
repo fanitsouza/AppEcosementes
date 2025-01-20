@@ -38,8 +38,9 @@ public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeV
     @Override
     public void onBindViewHolder(@NonNull SementeAdapter.SementeViewHolder holder, int position) {
         Semente semente = sementes.get(position);
-        holder.itv_nomeSemente.setText(holder.itv_nomeSemente.getText().toString() + " " + semente.getNome());
-        holder.itv_quantidadeSemente.setText(holder.itv_quantidadeSemente.getText().toString() + " " + semente.getQuantidade());
+        holder.tv_nomeSemente.setText(holder.tv_nomeSemente.getText().toString() + " " + semente.getNome());
+        holder.tv_quantidadeSemente.setText(holder.tv_quantidadeSemente.getText().toString() + " " + semente.getQuantidade());
+        holder.tv_precoSemente.setText(holder.tv_precoSemente.getText().toString() + " " + semente.getPreco());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetalheSemente.class);
@@ -54,13 +55,15 @@ public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeV
     }
 
     public static class SementeViewHolder extends RecyclerView.ViewHolder {
-        TextView itv_nomeSemente;
-        TextView itv_quantidadeSemente;
+        TextView tv_nomeSemente;
+        TextView tv_quantidadeSemente;
+        TextView tv_precoSemente;
 
         public SementeViewHolder(@NonNull View itemView) {
             super(itemView);
-            itv_nomeSemente = itemView.findViewById(R.id.itv_nomeSemente);
-            itv_quantidadeSemente = itemView.findViewById(R.id.itv_quantidadeSemente);
+            tv_nomeSemente = itemView.findViewById(R.id.tv_nomeSemente);
+            tv_quantidadeSemente = itemView.findViewById(R.id.tv_quantidadeSemente);
+            tv_precoSemente = itemView.findViewById(R.id.tv_precoSemente);
         }
     }
 }

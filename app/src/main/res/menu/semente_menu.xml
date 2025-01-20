@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menuSementeListHome"
         android:title="@string/menu_bottom_bar_home"
-        android:onClick="retornaHome"
+        android:onClick="backHome"
         android:icon="@drawable/ic_menu_home"/>
     <item android:id="@+id/menuSementeSearch"
         android:title="@string/menu_bottom_bar_search"
@@ -10,6 +10,6 @@
     <item
         android:id="@+id/menuAddSemente"
         android:icon="@drawable/ic_menu_add"
-        android:onClick="vaiParaAdicionarSemente"
+        android:onClick="addSementeOnClick"
         android:title="@string/addSeed" />
 </menu>

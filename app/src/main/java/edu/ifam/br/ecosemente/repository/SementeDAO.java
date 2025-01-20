@@ -38,6 +38,7 @@ public class SementeDAO {
                 semente.setTempoMedioColheita(cSementes.getInt(cSementes.getColumnIndex("tempoMedio")));
                 semente.setQuantidade(cSementes.getInt(cSementes.getColumnIndex("quantidade")));
                 semente.setCuidado(cSementes.getString(cSementes.getColumnIndex("cuidados")));
+                semente.setPreco(cSementes.getFloat(cSementes.getColumnIndex("preco")));
 
                 sementes.add(semente);
             }while(cSementes.moveToNext());
@@ -63,6 +64,8 @@ public class SementeDAO {
                 semente.setTempoMedioColheita(cSementes.getInt(cSementes.getColumnIndex("tempoMedio")));
                 semente.setQuantidade(cSementes.getInt(cSementes.getColumnIndex("quantidade")));
                 semente.setCuidado(cSementes.getString(cSementes.getColumnIndex("cuidados")));
+                semente.setPreco(cSementes.getFloat(cSementes.getColumnIndex("preco")));
+
         }
 
         return semente;
@@ -77,6 +80,7 @@ public class SementeDAO {
         cv.put("tempoMedio", semente.getTempoMedioColheita());
         cv.put("quantidade", semente.getQuantidade());
         cv.put("cuidados", semente.getCuidado());
+        cv.put("preco",semente.getPreco());
 
         sqLiteDatabase.insert("semente", null, cv);
 
@@ -91,6 +95,8 @@ public class SementeDAO {
         cv.put("tempoMedio", semente.getTempoMedioColheita());
         cv.put("quantidade", semente.getQuantidade());
         cv.put("cuidados", semente.getCuidado());
+        cv.put("preco",semente.getPreco());
+
 
         String whereClause = "id =?";
 

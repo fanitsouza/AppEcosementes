@@ -28,14 +28,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:itemIconTint="@color/green"
+        app:itemTextColor="@color/green"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/semente_menu"
-        app:labelVisibilityMode="labeled"
-        app:itemTextColor="@color/green"
-        />
+        app:menu="@menu/semente_menu" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSemente"
@@ -46,4 +45,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ProgressBar
+        android:id="@+id/pbListSemente"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,4 +23,6 @@
     <string name="btn_delete">Delete</string>
     <string name="seedNameLabel">Seed:</string>
     <string name="seedQuantityLabel">Qty:</string>
+    <string name="price">Price</string>
+    <string name="seedPriceLabel">Price:</string>
 </resources>
