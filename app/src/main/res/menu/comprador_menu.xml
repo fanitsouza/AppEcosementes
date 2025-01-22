@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuCompradorListHome"
+        android:title="@string/menu_bottom_bar_home"
+        android:onClick="backHome"
+        android:icon="@drawable/ic_menu_home"
+        />
+    <item android:id="@+id/menuCompradorSearch"
+        android:title="@string/menu_bottom_bar_search"
+        android:icon="@drawable/ic_menu_search"
+        />
+    <item
+        android:id="@+id/menuAddComprador"
+        android:icon="@drawable/ic_menu_add"
+        android:onClick="addCompradorOnClick"
+        android:title="@string/add_buyer" />
+</menu>

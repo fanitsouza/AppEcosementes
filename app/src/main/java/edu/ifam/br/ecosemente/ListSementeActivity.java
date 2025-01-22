@@ -21,18 +21,19 @@ import edu.ifam.br.ecosemente.dto.SementeDTO;
 import edu.ifam.br.ecosemente.entity.Semente;
 import edu.ifam.br.ecosemente.interfaces.SementeAPI;
 import edu.ifam.br.ecosemente.recycler.SementeAdapter;
-import edu.ifam.br.ecosemente.repository.SementeDAO;
+import edu.ifam.br.ecosemente.service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListSemente extends AppCompatActivity {
+public class ListSementeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SementeAdapter sementeAdapter;
     private ProgressBar pbListSemente;
     private SementeAPI sementeAPI;
+
 
 
 
@@ -52,7 +53,8 @@ public class ListSemente extends AppCompatActivity {
         pbListSemente = findViewById(R.id.pbListSemente);
         pbListSemente.setVisibility(View.INVISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        acessarApi();
+
+        sementeAPI = RetrofitService.createService(SementeAPI.class);
     }
 
     protected void onStart(){
@@ -61,7 +63,7 @@ public class ListSemente extends AppCompatActivity {
     }
 
     public void addSementeOnClick(android.view.MenuItem item){
-        Intent intent = new Intent(this, DetalheSemente.class);
+        Intent intent = new Intent(this, DetalheSementeActivity.class);
         startActivity(intent);
     }
 
@@ -70,14 +72,7 @@ public class ListSemente extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void acessarApi(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.8:8080/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        sementeAPI = retrofit.create(SementeAPI.class);
-    }
 
     private void getSementes(){
         Call<List<SementeDTO>> call = sementeAPI.getSemente();

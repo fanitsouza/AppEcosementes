@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import edu.ifam.br.ecosemente.entity.Semente;
 import edu.ifam.br.ecosemente.repository.SementeDAO;
 
-public class DetalheSemente extends AppCompatActivity {
+public class DetalheSementeActivity extends AppCompatActivity {
 
     private EditText etNome;
     private EditText etDescricao;

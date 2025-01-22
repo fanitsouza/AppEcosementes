@@ -25,4 +25,8 @@
     <string name="seedQuantityLabel">"Qtd: "</string>
     <string name="price">Preço</string>
     <string name="seedPriceLabel">Preço:</string>
+    <string name="add_buyer">Adicionar Comprador</string>
+    <string name="buyerList">Lista de Compradores</string>
+    <string name="nameLabel">Nome:</string>
+    <string name="cpfCnpjLabel">CPF/CNPJ:</string>
 </resources>
