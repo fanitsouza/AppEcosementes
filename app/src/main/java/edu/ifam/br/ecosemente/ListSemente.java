@@ -72,7 +72,7 @@ public class ListSemente extends AppCompatActivity {
 
     private void acessarApi(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.8:8080/api/")
+                .baseUrl("http://:8080/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
