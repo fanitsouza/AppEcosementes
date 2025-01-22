@@ -18,7 +18,6 @@ public class SementeDTO {
     }
 
     public SementeDTO(Semente semente) {
-        this.id = semente.getId();
         this.nome = semente.getNome();
         this.descricao = semente.getDescricao();
         this.especie = semente.getEspecie();

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.ifam.br.ecosemente.DetalheSemente;
+import edu.ifam.br.ecosemente.DetalheSementeActivity;
 import edu.ifam.br.ecosemente.R;
 import edu.ifam.br.ecosemente.entity.Semente;
 
@@ -43,7 +43,7 @@ public class SementeAdapter extends RecyclerView.Adapter<SementeAdapter.SementeV
         holder.tv_precoSemente.setText(holder.tv_precoSemente.getText().toString() + " " + semente.getPreco());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetalheSemente.class);
+            Intent intent = new Intent(context, DetalheSementeActivity.class);
             intent.putExtra("id", semente.getId());
             context.startActivity(intent);
         });

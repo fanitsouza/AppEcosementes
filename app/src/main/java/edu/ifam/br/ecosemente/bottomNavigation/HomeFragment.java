@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import edu.ifam.br.ecosemente.ListSemente;
+import edu.ifam.br.ecosemente.ListCompradorActivity;
+import edu.ifam.br.ecosemente.ListSementeActivity;
 import edu.ifam.br.ecosemente.R;
 
 /**
@@ -72,14 +73,22 @@ public class HomeFragment extends Fragment {
 
         // Encontre a View que será clicada
         View button = view.findViewById(R.id.btnSemente);
+        View buttonComprador = view.findViewById(R.id.btnComprador);
         button.setOnClickListener(v -> vaiparaSemente());
+        buttonComprador.setOnClickListener(view1 -> goToComprador());
+
 
         return view;
 
     }
 
     public void vaiparaSemente() {
-        Intent intent = new Intent(requireActivity(), ListSemente.class);
+        Intent intent = new Intent(requireActivity(), ListSementeActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToComprador() {
+        Intent intent = new Intent(requireActivity(), ListCompradorActivity.class);
         startActivity(intent);
     }
 }

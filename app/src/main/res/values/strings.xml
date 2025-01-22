@@ -25,4 +25,8 @@
     <string name="seedQuantityLabel">Qty:</string>
     <string name="price">Price</string>
     <string name="seedPriceLabel">Price:</string>
+    <string name="add_buyer">Add Buyer</string>
+    <string name="buyerList">Buyer List</string>
+    <string name="nameLabel">Name:</string>
+    <string name="cpfCnpjLabel">CPF/CNPJ:</string>
 </resources>
