@@ -29,4 +29,8 @@
     <string name="buyerList">Lista de Compradores</string>
     <string name="nameLabel">Nome:</string>
     <string name="cpfCnpjLabel">CPF/CNPJ:</string>
+    <string name="buyer_name">Nome do Comprador</string>
+    <string name="cpf_cnpj">CPF/CNPJ</string>
+    <string name="phone">Telefone</string>
+    <string name="email">Email</string>
 </resources>

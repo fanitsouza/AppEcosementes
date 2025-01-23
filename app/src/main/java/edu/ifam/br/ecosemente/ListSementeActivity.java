@@ -1,5 +1,6 @@
 package edu.ifam.br.ecosemente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ListSementeActivity extends AppCompatActivity {
     private SementeAdapter sementeAdapter;
     private ProgressBar pbListSemente;
     private SementeAPI sementeAPI;
+    private Context context;
 
 
 
@@ -55,6 +57,8 @@ public class ListSementeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         sementeAPI = RetrofitService.createService(SementeAPI.class);
+
+        context = this;
     }
 
     protected void onStart(){
@@ -94,7 +98,7 @@ public class ListSementeActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
                 }
 
-                sementeAdapter = new SementeAdapter(sementes, getApplicationContext());
+                sementeAdapter = new SementeAdapter(sementes, context);
                 recyclerView.setAdapter(sementeAdapter);
 
                 pbListSemente.setVisibility(View.INVISIBLE);

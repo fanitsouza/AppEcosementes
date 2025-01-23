@@ -1,5 +1,6 @@
 package edu.ifam.br.ecosemente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ public class ListCompradorActivity extends AppCompatActivity {
     private CompradorAdapter compradorAdapter;
     private ProgressBar pbCompradorList;
     private CompradorAPI compradorAPI;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class ListCompradorActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         compradorAPI = RetrofitService.createService(CompradorAPI.class);
+
+        context = this;
 
     }
 
@@ -90,7 +94,7 @@ public class ListCompradorActivity extends AppCompatActivity {
                     String codigoErro = "Erro: " + response.code();
                     Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
                 }
-                compradorAdapter = new CompradorAdapter(compradores, getApplicationContext());
+                compradorAdapter = new CompradorAdapter(compradores, context);
                 recyclerView.setAdapter(compradorAdapter);
 
                 pbCompradorList.setVisibility(View.INVISIBLE);
