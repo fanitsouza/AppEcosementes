@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DetalheCompradorActivity">
     <TextView
         android:id="@+id/tv_add_comprador"
@@ -20,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/svDetalheComprador"
         android:layout_width="379dp"
         android:layout_height="654dp"
         android:layout_marginTop="16dp"
@@ -31,22 +33,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etNomeComprador"
+                android:id="@+id/etDetalheCompradorNomeComprador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/edit_text_shape"
                 android:hint="@string/buyer_name"
-                android:inputType="number"
+                android:inputType="text"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
 
             <EditText
-                android:id="@+id/etCpfCnpjComprador"
+                android:id="@+id/etDetalheCompradorCpfCnpjComprador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -58,7 +60,7 @@
                 android:textColorHint="@color/green" />
 
             <EditText
-                android:id="@+id/etTelefoneComprador"
+                android:id="@+id/etDetalheCompradorTelefoneComprador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -70,13 +72,13 @@
                 android:textColorHint="@color/green" />
 
             <EditText
-                android:id="@+id/etEmailComprador"
+                android:id="@+id/etDetalheCompradorEmailComprador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/edit_text_shape"
                 android:hint="@string/email"
-                android:inputType="number"
+                android:inputType="text|textEmailAddress"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
@@ -119,7 +121,7 @@
 
         </LinearLayout>
 
-       </ScrollView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/pbDetalheComprador"

@@ -128,8 +128,6 @@ public class DetalheSementeActivity extends AppCompatActivity {
     }
 
 
-
-
     public void btnClearSementeOnClick(View view){
         setSementeOnEditText(new Semente());
     }
@@ -171,7 +169,7 @@ public class DetalheSementeActivity extends AppCompatActivity {
 
     }
 
-    public void saveSemente(){
+    private void saveSemente(){
         Semente semente = getSementeFromEditText();
 
         pbDetalheSemente.setVisibility(View.VISIBLE);
