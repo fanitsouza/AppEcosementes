@@ -24,7 +24,7 @@
     <string name="seedNameLabel">Seed:</string>
     <string name="seedQuantityLabel">Qty:</string>
     <string name="price">Price</string>
-    <string name="seedPriceLabel">Price:</string>
+    <string name="PriceLabel">Price:</string>
     <string name="add_buyer">Add Buyer</string>
     <string name="buyerList">Buyer List</string>
     <string name="nameLabel">Name:</string>
@@ -33,4 +33,10 @@
     <string name="cpf_cnpj">CPF/CNPJ</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
+    <string name="sales_list">Sales List</string>
+    <string name="add_sale">Add Sale</string>
+    <string name="buyerLabel">Buyer:</string>
+    <string name="dateLabel">Date:</string>
+    <string name="valueLabel">Value:</string>
+    <string name="addSale">Add Sale</string>
 </resources>

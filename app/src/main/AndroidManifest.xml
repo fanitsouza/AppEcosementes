@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DetalheVendaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListVendaActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetalheCompradorActivity"
             android:exported="false" />
         <activity

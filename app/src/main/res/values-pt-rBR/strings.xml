@@ -24,7 +24,7 @@
     <string name="seedNameLabel">"Semente: "</string>
     <string name="seedQuantityLabel">"Qtd: "</string>
     <string name="price">Preço</string>
-    <string name="seedPriceLabel">Preço:</string>
+    <string name="PriceLabel">Preço:</string>
     <string name="add_buyer">Adicionar Comprador</string>
     <string name="buyerList">Lista de Compradores</string>
     <string name="nameLabel">Nome:</string>
@@ -33,4 +33,9 @@
     <string name="cpf_cnpj">CPF/CNPJ</string>
     <string name="phone">Telefone</string>
     <string name="email">Email</string>
+    <string name="sales_list">Lista de Sementes</string>
+    <string name="add_sale">Adicionar Venda</string>
+    <string name="buyerLabel">Comprador:</string>
+    <string name="dateLabel">Data:</string>
+    <string name="valueLabel">Valor:</string>
 </resources>
