@@ -65,7 +65,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnAddItem"
-                android:layout_width="wrap_content"
+                android:layout_width="108dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="16dp"
@@ -89,14 +89,23 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancelaVenda"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:text="@string/btnCancelarVenda"
+                    android:textColor="@color/green" />
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnDeletarVenda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/background_button"
-                    android:onClick="btnDeleteSementeOnClick"
                     android:text="@string/btn_delete"
                     android:textColor="@color/green" />
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnConfirmarVenda"
@@ -106,6 +115,8 @@
                     android:background="@drawable/background_button"
                     android:text="@string/btn_confirm"
                     android:textColor="@color/green" />
+
+
             </LinearLayout>
 
 

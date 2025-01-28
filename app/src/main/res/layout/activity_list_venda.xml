@@ -8,15 +8,18 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context=".ListVendaActivity">
+
     <TextView
         android:id="@+id/tv_ListSemente"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/header"
         android:text="@string/sales_list"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewVenda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +41,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewVenda"
-        android:layout_width="409dp"
-        android:layout_height="623dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btnv_venda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

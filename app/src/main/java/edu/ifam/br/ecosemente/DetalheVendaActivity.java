@@ -54,9 +54,10 @@ public class DetalheVendaActivity extends AppCompatActivity {
     private Button btnAdditem;
     private Button btnDeletaVenda;
     private Button btnConfirmaVenda;
+    private Button btnCancelaVenda;
     private List<ItemVenda> itemVendas;
-    private List<Semente> sementesList;
     private List<Comprador> compradores;
+    private List<Semente> sementesList;
     private CompradorAPI compradorAPI;
     private SementeAPI sementeAPI;
     private VendaAPI vendaAPI;
@@ -95,6 +96,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
 
         btnDeletaVenda = findViewById(R.id.btnDeletarVenda);
         btnConfirmaVenda = findViewById(R.id.btnConfirmarVenda);
+        btnCancelaVenda = findViewById(R.id.btnCancelaVenda);
 
         btnDeletaVenda.setVisibility(View.INVISIBLE);
         pbDetalheVenda.setVisibility(View.INVISIBLE);
@@ -116,6 +118,9 @@ public class DetalheVendaActivity extends AppCompatActivity {
         itemVendaAdapter = new ItemVendaAdapter(sementesList, itemVendas, this, tvValorTotal);
         recyclerView.setAdapter(itemVendaAdapter);
 
+        btnCancelaVenda.setOnClickListener(v->{
+            cancelOnClick();
+        });
 
         Intent intent = getIntent();
         if(intent.hasExtra("id")){
@@ -258,6 +263,10 @@ public class DetalheVendaActivity extends AppCompatActivity {
                 pbDetalheVenda.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void cancelOnClick(){
+        finish();
     }
 
 

@@ -43,4 +43,5 @@
     <string name="totalPriceLabel">Valor Total:</string>
     <string name="select_seed">Selecione uma semente</string>
     <string name="select_buyer">Selecione um comprador</string>
+    <string name="btnCancelarVenda">Cancelar Venda</string>
 </resources>
