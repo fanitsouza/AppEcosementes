@@ -145,9 +145,9 @@ public class DetalheVendaActivity extends AppCompatActivity {
 
 
     private Venda getVendaFromComponentes(){
-        Comprador comprador = new Comprador();
+        Comprador comprador;
         System.out.println("Debug de getVendaFromComponentes: "+cpfCnpj);
-        if(id == 0){
+        if(id == null){
             comprador = (Comprador) spinnerComprador.getSelectedItem();
         }else{
             comprador = compradores.stream()
@@ -312,8 +312,6 @@ public class DetalheVendaActivity extends AppCompatActivity {
                  Venda venda = new Venda();
                  if(response.isSuccessful() && response.body() != null){
                      VendaOutputDTO vendaOutputDTO = response.body();
-
-
 
                      venda = vendaOutputDTO.getVenda();
 
