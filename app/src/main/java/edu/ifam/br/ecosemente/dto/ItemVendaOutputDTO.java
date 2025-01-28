@@ -3,22 +3,24 @@ package edu.ifam.br.ecosemente.dto;
 import edu.ifam.br.ecosemente.entity.ItemVenda;
 import edu.ifam.br.ecosemente.entity.Semente;
 
-public class ItemVendaDTO {
+public class ItemVendaOutputDTO {
 
     private long id;
-    private SementeDTO semente;
+    private String semente;
     private int quantidade;
     private float precoItem;
 
-    public ItemVendaDTO() {
+    public ItemVendaOutputDTO() {
     }
 
-    public ItemVendaDTO(ItemVenda itemVenda) {
-        this.semente = new SementeDTO(itemVenda.getSemente());
+    public ItemVendaOutputDTO(ItemVenda itemVenda) {
+        this.semente = itemVenda.getSemente().getNome();
         this.quantidade = itemVenda.getQuantidade();
     }
     public ItemVenda getItemVenda(){
-        return new ItemVenda(id, semente.getSemente(), quantidade,precoItem);
+        Semente semente = new Semente();
+        semente.setNome(this.semente);
+        return new ItemVenda(id,semente, quantidade,precoItem);
     }
 
     public long getId() {
@@ -29,11 +31,11 @@ public class ItemVendaDTO {
         this.id = id;
     }
 
-    public SementeDTO getSemente() {
+    public String getSemente() {
         return semente;
     }
 
-    public void setSemente(SementeDTO semente) {
+    public void setSemente(String semente) {
         this.semente = semente;
     }
 

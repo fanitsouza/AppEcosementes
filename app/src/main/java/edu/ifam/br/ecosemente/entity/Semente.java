@@ -1,5 +1,7 @@
 package edu.ifam.br.ecosemente.entity;
 
+import androidx.annotation.NonNull;
+
 public class Semente {
 
     private long id;
@@ -109,5 +111,11 @@ public class Semente {
 
     public void setPreco(float preco) {
         this.preco = preco;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nome;
     }
 }

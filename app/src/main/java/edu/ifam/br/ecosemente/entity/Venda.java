@@ -1,12 +1,13 @@
 package edu.ifam.br.ecosemente.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Venda {
 
     private long id;
-    private LocalDate dataVenda;
+    private Date dataVenda;
     private Comprador comprador;
     private List<ItemVenda> itens;
     private float valorTotal;
@@ -14,7 +15,7 @@ public class Venda {
     public Venda() {
     }
 
-    public Venda(long id, LocalDate dataVenda, Comprador comprador, List<ItemVenda> itens, float valorTotal) {
+    public Venda(long id, Date dataVenda, Comprador comprador, List<ItemVenda> itens, float valorTotal) {
         this.id = id;
         this.dataVenda = dataVenda;
         this.comprador = comprador;
@@ -30,11 +31,11 @@ public class Venda {
         this.id = id;
     }
 
-    public LocalDate getDataVenda() {
+    public Date getDataVenda() {
         return dataVenda;
     }
 
-    public void setDataVenda(LocalDate dataVenda) {
+    public void setDataVenda(Date dataVenda) {
         this.dataVenda = dataVenda;
     }
 

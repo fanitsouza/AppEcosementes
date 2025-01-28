@@ -39,4 +39,8 @@
     <string name="dateLabel">Date:</string>
     <string name="valueLabel">Value:</string>
     <string name="addSale">Add Sale</string>
+    <string name="addItem">+ Add Item</string>
+    <string name="totalPriceLabel">Total Price:</string>
+    <string name="select_seed">Select a Seed</string>
+    <string name="select_buyer">Select a Buyer</string>
 </resources>

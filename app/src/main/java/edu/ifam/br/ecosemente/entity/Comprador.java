@@ -1,5 +1,7 @@
 package edu.ifam.br.ecosemente.entity;
 
+import androidx.annotation.NonNull;
+
 public class Comprador {
 
     private long id;
@@ -57,5 +59,11 @@ public class Comprador {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nome;
     }
 }

@@ -50,7 +50,7 @@ public class ListCompradorActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewComprador);
         pbCompradorList = findViewById(R.id.pbCompradorList);
-        pbCompradorList.setVisibility(RecyclerView.INVISIBLE);
+        pbCompradorList.setVisibility(View.INVISIBLE);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

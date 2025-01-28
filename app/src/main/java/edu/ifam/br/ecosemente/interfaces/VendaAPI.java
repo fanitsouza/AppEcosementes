@@ -3,7 +3,8 @@ package edu.ifam.br.ecosemente.interfaces;
 import java.util.List;
 
 import edu.ifam.br.ecosemente.dto.SementeDTO;
-import edu.ifam.br.ecosemente.dto.VendaDTO;
+import edu.ifam.br.ecosemente.dto.VendaInputDTO;
+import edu.ifam.br.ecosemente.dto.VendaOutputDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -15,16 +16,16 @@ import retrofit2.http.Path;
 public interface VendaAPI {
 
     @GET("venda")
-    Call<List<VendaDTO>> getSemente();
+    Call<List<VendaOutputDTO>> getVenda();
 
     @GET("venda/{id}")
-    Call<VendaDTO> getVenda(@Path("id") Long id);
+    Call<VendaOutputDTO> getVenda(@Path("id") Long id);
 
     @POST("venda")
-    Call<VendaDTO> setVenda(@Body VendaDTO vendaDTO);
+    Call<VendaOutputDTO> setVenda(@Body VendaInputDTO vendaInputDTO);
 
     @PUT("venda/{id}")
-    Call<VendaDTO> updateVenda(@Path("id") Long id, @Body SementeDTO sementeDTO);
+    Call<VendaOutputDTO> updateVenda(@Path("id") Long id, @Body SementeDTO sementeDTO);
 
     @DELETE("venda/{id}")
     Call<Void> deleteVenda(@Path("id") Long id);

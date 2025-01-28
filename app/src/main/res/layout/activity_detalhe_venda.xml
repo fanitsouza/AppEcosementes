@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/header"
-        android:text="@string/addSeed"
+        android:text="@string/add_sale"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="34sp"
@@ -48,13 +48,14 @@
                 android:textColor="@color/green"/>
 
             <Spinner
-                android:id="@+id/spinnerComprador"
+                android:id="@+id/spinnerCompradores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:padding="12dp"
                 android:background="@drawable/background_button"
-                android:textAlignment="viewStart" />
+                android:padding="12dp"
+                android:textAlignment="viewStart"
+                android:prompt="@string/select_buyer"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewItemVenda"
@@ -62,11 +63,24 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"/>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/background_button"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="16dp"
+                android:background="@drawable/background_button"
+                android:text="@string/addItem"
+                android:textColor="@color/green" />
+            <TextView
+                android:id="@+id/tv_detalhaVendaValorTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:padding="12dp"
+                android:text="@string/totalPriceLabel"
+                android:textColor="@color/green"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +89,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLimpar"
+                    android:id="@+id/btnLimparVenda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -85,7 +99,7 @@
                     android:textColor="@color/green" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnDeletar"
+                    android:id="@+id/btnDeletarVenda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -95,7 +109,7 @@
                     android:textColor="@color/green" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnConfirmar"
+                    android:id="@+id/btnConfirmarVenda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -108,7 +122,7 @@
         </LinearLayout>
     </ScrollView>
     <ProgressBar
-        android:id="@+id/pbDetalheSemente"
+        android:id="@+id/pbDetalheVenda"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
