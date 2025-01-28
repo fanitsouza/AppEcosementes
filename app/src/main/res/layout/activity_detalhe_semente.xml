@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/header"
-        android:text="@string/addSeed"
+        android:text="@string/add_sale"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="34sp"

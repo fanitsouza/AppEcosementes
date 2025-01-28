@@ -89,16 +89,6 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLimparVenda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/background_button"
-                    android:onClick="btnClearSementeOnClick"
-                    android:text="@string/btn_clean"
-                    android:textColor="@color/green" />
-
-                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnDeletarVenda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

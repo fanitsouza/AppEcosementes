@@ -5,6 +5,7 @@ import java.util.List;
 import edu.ifam.br.ecosemente.dto.SementeDTO;
 import edu.ifam.br.ecosemente.dto.VendaInputDTO;
 import edu.ifam.br.ecosemente.dto.VendaOutputDTO;
+import edu.ifam.br.ecosemente.entity.Venda;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -25,7 +26,7 @@ public interface VendaAPI {
     Call<VendaOutputDTO> setVenda(@Body VendaInputDTO vendaInputDTO);
 
     @PUT("venda/{id}")
-    Call<VendaOutputDTO> updateVenda(@Path("id") Long id, @Body SementeDTO sementeDTO);
+    Call<VendaOutputDTO> updateVenda(@Path("id") Long id, @Body VendaInputDTO vendaInputDTO);
 
     @DELETE("venda/{id}")
     Call<Void> deleteVenda(@Path("id") Long id);

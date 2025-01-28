@@ -22,10 +22,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.ifam.br.ecosemente.dto.CompradorDTO;
 import edu.ifam.br.ecosemente.dto.SementeDTO;
+import edu.ifam.br.ecosemente.dto.VendaInputDTO;
 import edu.ifam.br.ecosemente.dto.VendaOutputDTO;
 import edu.ifam.br.ecosemente.entity.Comprador;
 import edu.ifam.br.ecosemente.entity.ItemVenda;
@@ -50,7 +52,6 @@ public class DetalheVendaActivity extends AppCompatActivity {
     private ProgressBar pbDetalheVenda;
     private ScrollView scrollView;
     private Button btnAdditem;
-    private Button btnLimpaVenda;
     private Button btnDeletaVenda;
     private Button btnConfirmaVenda;
     private List<ItemVenda> itemVendas;
@@ -61,6 +62,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
     private VendaAPI vendaAPI;
     private Context context;
     private Long id;
+    private String cpfCnpj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +78,9 @@ public class DetalheVendaActivity extends AppCompatActivity {
         context = this;
 
         itemVendas = new ArrayList<>();
-        sementesList = new ArrayList<>();
         compradores = new ArrayList<>();
+        cpfCnpj = "";
+
 
         tvComprador = findViewById(R.id.tv_detalhaVendaComprador);
         tvValorTotal = findViewById(R.id.tv_detalhaVendaValorTotal);
@@ -89,7 +92,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
         pbDetalheVenda = findViewById(R.id.pbDetalheVenda);
         scrollView = findViewById(R.id.svDetalheVenda);
         btnAdditem = findViewById(R.id.btnAddItem);
-        btnLimpaVenda = findViewById(R.id.btnLimparVenda);
+
         btnDeletaVenda = findViewById(R.id.btnDeletarVenda);
         btnConfirmaVenda = findViewById(R.id.btnConfirmarVenda);
 
@@ -101,41 +104,84 @@ public class DetalheVendaActivity extends AppCompatActivity {
         sementeAPI = RetrofitService.createService(SementeAPI.class);
         vendaAPI = RetrofitService.createService(VendaAPI.class);
 
-
+        btnAdditem.setOnClickListener(v->{
+            addItem();
+        });
 
 
         getComprador();
         getSementes();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemVendaAdapter = new ItemVendaAdapter(sementesList, itemVendas, this);
+        itemVendaAdapter = new ItemVendaAdapter(sementesList, itemVendas, this, tvValorTotal);
         recyclerView.setAdapter(itemVendaAdapter);
+
+
         Intent intent = getIntent();
         if(intent.hasExtra("id")){
             id = intent.getLongExtra("id", 0);
             getVenda(id);
             btnDeletaVenda.setVisibility(View.VISIBLE);
             spinnerComprador.setVisibility(View.INVISIBLE);
+
+            btnConfirmaVenda.setOnClickListener(v->{
+                updateVenda(id);
+            });
+
+            btnDeletaVenda.setOnClickListener(v->{
+                deleteVenda(id);
+            });
         }else{
             scrollView.setVisibility(View.VISIBLE);
             tvComprador.setVisibility(View.INVISIBLE);
+            btnConfirmaVenda.setOnClickListener(v -> {
+
+                saveVenda();
+            });
+
         }
     }
 
 
 
     private Venda getVendaFromComponentes(){
-        Comprador comprador = (Comprador) spinnerComprador.getSelectedItem();
+        Comprador comprador = new Comprador();
+        System.out.println("Debug de getVendaFromComponentes: "+cpfCnpj);
+        if(id == 0){
+            comprador = (Comprador) spinnerComprador.getSelectedItem();
+        }else{
+            comprador = compradores.stream()
+                    .filter(c -> c.getCpfCnpj() != null && c.getCpfCnpj().equals(cpfCnpj))
+                    .findFirst()
+                    .orElse(null);
+
+        }
+
         Venda venda = new Venda();
+        venda.setDataVenda(new Date());
         venda.setComprador(comprador);
-        venda.setItens(itemVendas);
+        // Obtenha os itens do adaptador
+        List<ItemVenda> itensVenda = itemVendaAdapter.getItemVendas();
+
+        // Valide e processe os itens
+        for (ItemVenda item : itensVenda) {
+            if (item.getSemente() == null) {
+                Toast.makeText(this, "Selecione uma semente para cada item!", Toast.LENGTH_SHORT).show();
+            }
+            if (item.getQuantidade() <= 0) {
+                Toast.makeText(this, "Informe uma quantidade válida!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        venda.setItens(itensVenda);
         return  venda;
     }
+
+
 
     private void setVendaOnComponentes(Venda venda) {
         tvComprador.setText(venda.getComprador().getNome());
         tvValorTotal.setText(String.format("Valor Total: %.2f", venda.getValorTotal()));
-
+        cpfCnpj = venda.getComprador().getCpfCnpj();
         itemVendas = venda.getItens();
 
         if (itemVendaAdapter != null) {
@@ -144,6 +190,14 @@ public class DetalheVendaActivity extends AppCompatActivity {
             Toast.makeText(context, "Adaptador de itens não inicializado.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void addItem() {
+        ItemVenda itemVenda = new ItemVenda(); // Cria um novo item
+        itemVendas.add(itemVenda); // Adiciona o item à lista
+        itemVendaAdapter.notifyItemInserted(itemVendas.size() - 1); // Notifica o adaptador que um novo item foi adicionado
+    }
+
+
 
 
     private void getComprador() {
@@ -173,18 +227,21 @@ public class DetalheVendaActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public View getDropDownView(int position, View viewConverter, ViewGroup parent){
+                        public View getView(int position, View viewConverter, ViewGroup parent){
                             View view = super.getDropDownView(position, viewConverter, parent);
                             TextView tv = (TextView) view;
                             if(position == 0){
-
+                                tv.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                            }else{
+                                tv.setTextColor(getResources().getColor(R.color.green));
                             }
+                            return view;
                         }
 
-                    }
+                    };
 
-                    // Atualiza o adaptador após adicionar os dados
-                    ((ArrayAdapter) spinnerComprador.getAdapter()).notifyDataSetChanged();
+                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerComprador.setAdapter(spinnerAdapter);
                     spinnerComprador.setSelection(0);
 
                 } else {
@@ -213,10 +270,13 @@ public class DetalheVendaActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<SementeDTO>>() {
             @Override
             public void onResponse(Call<List<SementeDTO>> call, Response<List<SementeDTO>> response) {
+
                 List<Semente> sementes = new ArrayList<>();
 
                 if(response.isSuccessful() && response.body() != null){
-
+                    Semente placeHolder = new Semente();
+                    placeHolder.setNome(getResources().getString(R.string.select_seed));
+                    sementes.add(placeHolder);
                     List<SementeDTO> sementeDTOS = response.body();
                     for(SementeDTO sementeDTO : sementeDTOS){
                         sementes.add(sementeDTO.getSemente());
@@ -226,7 +286,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
                 }
 
-                itemVendaAdapter = new ItemVendaAdapter(sementes,itemVendas, context);
+                itemVendaAdapter = new ItemVendaAdapter(sementes,itemVendas, context, tvValorTotal);
                 recyclerView.setAdapter(itemVendaAdapter);
 
                 pbDetalheVenda.setVisibility(View.INVISIBLE);
@@ -245,6 +305,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
         Call<VendaOutputDTO> call = vendaAPI.getVenda(id);
 
         pbDetalheVenda.setVisibility(View.VISIBLE);
+
          call.enqueue(new Callback<VendaOutputDTO>() {
              @Override
              public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
@@ -252,13 +313,16 @@ public class DetalheVendaActivity extends AppCompatActivity {
                  if(response.isSuccessful() && response.body() != null){
                      VendaOutputDTO vendaOutputDTO = response.body();
 
+
+
                      venda = vendaOutputDTO.getVenda();
 
                  }else{
                      String codigoErro = "Erro: " + response.code();
                      Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
                  }
-
+                 cpfCnpj = venda.getComprador().getCpfCnpj();
+                 System.out.println(cpfCnpj);
                  setVendaOnComponentes(venda);
                  pbDetalheVenda.setVisibility(View.INVISIBLE);
                  scrollView.setVisibility(View.VISIBLE);
@@ -273,5 +337,80 @@ public class DetalheVendaActivity extends AppCompatActivity {
          });
     }
 
+    public void saveVenda(){
+        Call<VendaOutputDTO> call = vendaAPI.setVenda(new VendaInputDTO(getVendaFromComponentes()));
+        pbDetalheVenda.setVisibility(View.VISIBLE);
+
+        call.enqueue(new Callback<VendaOutputDTO>() {
+            @Override
+            public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                if(response.isSuccessful() && response.body() != null){
+                    Toast.makeText(getApplicationContext(), "Venda adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Erro ao adicionar: " + response.code(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VendaOutputDTO> call, Throwable t) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Falha ao adicionar: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    public void updateVenda(Long id){
+        Call<VendaOutputDTO> call = vendaAPI.updateVenda(id, new VendaInputDTO(getVendaFromComponentes()));
+        pbDetalheVenda.setVisibility(View.VISIBLE);
+        call.enqueue(new Callback<VendaOutputDTO>() {
+            @Override
+            public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                if(response.isSuccessful() && response.body() != null){
+                    Toast.makeText(getApplicationContext(), "Venda atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Erro ao atualizar: " + response.code(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VendaOutputDTO> call, Throwable t) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Falha ao adicionar: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    public void deleteVenda(Long id){
+        Call<Void> call = vendaAPI.deleteVenda(id);
+        pbDetalheVenda.setVisibility(View.VISIBLE);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Venda deleta com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Erro ao deletar: " + response.code(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Falha ao deletear: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
 
 }
