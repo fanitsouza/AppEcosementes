@@ -25,6 +25,7 @@ import edu.ifam.br.ecosemente.repository.NomeCientificoDAO;
 public class NomeCientificoActivity extends AppCompatActivity {
 
     private EditText etNome;
+    private EditText etNomePopular;
     private Button btnSalvar, btnLimpar, btnDeletar;
     private ListView lvNomes;
     private ProgressBar pb;
@@ -48,6 +49,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
 
         // 1. Conectar componentes do layout
         etNome = findViewById(R.id.etNomeCientificoInput);
+        etNomePopular = findViewById(R.id.etNomePopularInput);
         btnSalvar = findViewById(R.id.btnNomeCientificoSalvar);
         btnLimpar = findViewById(R.id.btnNomeCientificoLimpar);
         btnDeletar = findViewById(R.id.btnNomeCientificoDeletar);
@@ -100,6 +102,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
 
             // Preenche o campo de texto
             etNome.setText(nomeCientificoSelecionado.getNome());
+            etNomePopular.setText(nomeCientificoSelecionado.getNomePopular());
 
             // Ajusta os botões
             btnSalvar.setText("Atualizar");
@@ -117,6 +120,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
 
     private void salvar() {
         String nome = etNome.getText().toString().trim();
+        String nomePopular = etNomePopular.getText().toString().trim();
         if (nome.isEmpty()) {
             Toast.makeText(this, "Por favor, digite um nome.", Toast.LENGTH_SHORT).show();
             return;
@@ -126,7 +130,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
 
         if (nomeCientificoSelecionado == null) {
             // --- Lógica de INSERIR (Create) ---
-            long resultado = dao.inserir(nome);
+            long resultado = dao.inserir(nome,nomePopular);
             if (resultado > 0) {
                 Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
             } else if (resultado == -1) {
@@ -138,6 +142,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
         } else {
             // --- Lógica de ATUALIZAR (Update) ---
             nomeCientificoSelecionado.setNome(nome);
+            nomeCientificoSelecionado.setNomePopular(nomePopular);
             int rowsAfetadas = dao.atualizar(nomeCientificoSelecionado);
             if (rowsAfetadas > 0) {
                 Toast.makeText(this, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
@@ -181,6 +186,7 @@ public class NomeCientificoActivity extends AppCompatActivity {
     private void limparCampos() {
         nomeCientificoSelecionado = null;
         etNome.setText("");
+        etNomePopular.setText("");
         btnSalvar.setText("Salvar");
         btnDeletar.setEnabled(false); // Desabilita o "Deletar"
         etNome.requestFocus();

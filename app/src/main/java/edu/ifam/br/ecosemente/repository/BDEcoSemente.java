@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 public class BDEcoSemente extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ecosementedb";
-    // 1. INCREMENTAR A VERSÃO DO BANCO PARA 7
-    private static final int DATABASE_VERSION = 7;
+
+    private static final int DATABASE_VERSION = 8;
 
     public BDEcoSemente(Context context){
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
@@ -45,7 +45,8 @@ public class BDEcoSemente extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "CREATE TABLE nome_cientifico (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "nome TEXT NOT NULL UNIQUE)" // Nome científico
+                        "nome TEXT NOT NULL UNIQUE,"+
+                         "nome_popular TEXT)" // Nome científico
         );
 
         // 3. MODIFICAR A TABELA 'semente' PARA CORRESPONDER AO NOVO LAYOUT

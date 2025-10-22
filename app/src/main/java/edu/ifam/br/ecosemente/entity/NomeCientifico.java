@@ -4,36 +4,46 @@ public class NomeCientifico {
 
         private long id;
         private String nome;
+        private String nomePopular;
 
         public NomeCientifico() {
         }
 
-        public NomeCientifico(long id, String nome) {
-            this.id = id;
-            this.nome = nome;
-        }
+    public NomeCientifico(long id, String nome, String nomePopular) {
+        this.id = id;
+        this.nome = nome;
+        this.nomePopular = nomePopular;
+    }
 
-        // --- Getters e Setters ---
-        public long getId() {
-            return id;
-        }
+    public long getId() {
+        return id;
+    }
 
-        public void setId(long id) {
-            this.id = id;
-        }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-        public String getNome() {
-            return nome;
-        }
+    public String getNome() {
+        return nome;
+    }
 
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-        // --- IMPORTANTE ---
+    public String getNomePopular() {
+        return nomePopular;
+    }
+
+    public void setNomePopular(String nomePopular) {
+        this.nomePopular = nomePopular;
+    }
+
+    // --- IMPORTANTE ---
         // O ArrayAdapter usará este método para exibir o texto no ListView e no Spinner.
-        @Override
-        public String toString() {
-            return nome;
-        }
+    public String toString() {
+        // Ex: "Científico: Zea mays, Popular: Milho"
+        return "Científico: " + (nome != null ? nome : "(vazio)") +
+                ", Popular: " + (nomePopular != null ? nomePopular : "(vazio)");
+    }
 }

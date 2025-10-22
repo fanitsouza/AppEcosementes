@@ -33,6 +33,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_crud_nc_header" />
+    <EditText
+        android:id="@+id/etNomePopularInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="Nome popular (Opcional)"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="@color/green"
+        android:textColorHint="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNomeCientificoInput" />
 
     <LinearLayout
         android:id="@+id/ll_crud_nc_buttons"
@@ -43,7 +59,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNomeCientificoInput">
+        app:layout_constraintTop_toBottomOf="@+id/etNomePopularInput">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnNomeCientificoLimpar"

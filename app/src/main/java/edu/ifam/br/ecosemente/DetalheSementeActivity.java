@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +64,9 @@ public class DetalheSementeActivity extends AppCompatActivity {
     private Button btnDelete; // <-- ADICIONADO DE VOLTA
     private ScrollView svDetalheSemente;
     private ProgressBar pbDetalheSemente;
-    private Spinner spNomeCientifico;
+    private TextView tvNomeCientificoResultado;
     private TextView tvEpocaInicio;
     private TextView tvEpocaFim;
-    private CheckBox cbNatural;
     private RadioGroup rgTipoCultivo;
     private RadioGroup rgTamanhoPorte;
     private TextView tvLatitude, tvLongitude;
@@ -80,8 +81,8 @@ public class DetalheSementeActivity extends AppCompatActivity {
     private SementeDAO sementeDAO;
     private NomeCientificoDAO nomeCientificoDAO;
     private long id;
-    private List<NomeCientifico> listaNomesCientificos;
-    private ArrayAdapter<NomeCientifico> nomeCientificoAdapter;
+
+    private Long nomeCientificoEncontradoId = null;
     private final Calendar myCalendar = Calendar.getInstance();
 
     // --- Variáveis de Permissão, GPS e Câmera ---
@@ -124,7 +125,7 @@ public class DetalheSementeActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDelete); // <-- ADICIONADO DE VOLTA
         svDetalheSemente = findViewById(R.id.svCadastroSemente);
         pbDetalheSemente = findViewById(R.id.pbCadastroSemente);
-        spNomeCientifico = findViewById(R.id.spCadastroNomeCientifico);
+        tvNomeCientificoResultado = findViewById(R.id.tvNomeCientificoResultado);
         tvEpocaInicio = findViewById(R.id.tvDetalheSementeEpocaInicio);
         tvEpocaFim = findViewById(R.id.tvDetalheSementeEpocaFim);
         rgTipoCultivo = findViewById(R.id.rgCadastroTipoCultivo);
@@ -157,6 +158,7 @@ public class DetalheSementeActivity extends AppCompatActivity {
         btnGaleria.setOnClickListener(v -> onGaleriaClick());
         btnLimpar.setOnClickListener(v -> btnClearSementeOnClick(v));
 
+        configurarBuscaNomeCientifico();
 
         Intent intent = getIntent();
         if(intent.hasExtra("id")){
@@ -191,9 +193,6 @@ public class DetalheSementeActivity extends AppCompatActivity {
         super.onResume();
         sementeDAO.open();
         nomeCientificoDAO.open();
-        popularSpinnerNomeCientifico(); // Popula o spinner
-
-
     }
 
     @Override
@@ -392,42 +391,45 @@ public class DetalheSementeActivity extends AppCompatActivity {
         textView.setText(sdf.format(myCalendar.getTime()));
     }
 
-    // --- LÓGICA DE DADOS (SPINNER, GET/SET) ---
-
-    private void popularSpinnerNomeCientifico() {
-        if (listaNomesCientificos != null) listaNomesCientificos.clear();
-
-        listaNomesCientificos = nomeCientificoDAO.listarTodos();
-        NomeCientifico hint = new NomeCientifico(0, "Selecione (Opcional)...");
-        listaNomesCientificos.add(0, hint);
-
-
-        nomeCientificoAdapter = new ArrayAdapter<NomeCientifico>(
-                this,
-                android.R.layout.simple_spinner_item,
-                listaNomesCientificos
-        ) {
+    private void configurarBuscaNomeCientifico() {
+        etNomePopular.addTextChangedListener(new TextWatcher() {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                ((TextView) view).setTextColor(getResources().getColor(R.color.green));
-                return view;
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTextColor(getResources().getColor(R.color.green));
-                return view;
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Evita crash se o DAO não estiver aberto (ex: durante a criação)
+                if (nomeCientificoDAO == null) return;
+
+                String nomePopularDigitado = s.toString().trim();
+                if (nomePopularDigitado.isEmpty()) {
+                    tvNomeCientificoResultado.setText("Não informado");
+                    nomeCientificoEncontradoId = null;
+                    return;
+                }
+
+                // Busca no banco
+                NomeCientifico nc = nomeCientificoDAO.buscarPorNomePopular(nomePopularDigitado);
+                //System.out.println("Resultado do nome cientifico: " + nc.getNome());
+
+                if (nc != null) {
+                    // Encontrou!
+                    System.out.println("Resultado do nome cientifico: " + nc.getNome());
+                    tvNomeCientificoResultado.setText(nc.getNome());
+                    nomeCientificoEncontradoId = nc.getId();
+                } else {
+                    // Não encontrou
+                    System.out.println("Resultado do nome cientifico: NULL para a busca por '" + nomePopularDigitado + "'");
+                    tvNomeCientificoResultado.setText("Nome científico não encontrado");
+                    nomeCientificoEncontradoId = null;
+                }
             }
-        };
-
-        nomeCientificoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-
-        spNomeCientifico.setAdapter(nomeCientificoAdapter);
+        });
     }
+
 
     // (Este método está correto, pois já removemos os campos)
     private Semente getSementeFromEditText(){
@@ -441,12 +443,7 @@ public class DetalheSementeActivity extends AppCompatActivity {
             semente.setTempoMedioColheita(0); // Default or handle error
         }
 
-        NomeCientifico ncSelecionado = (NomeCientifico) spNomeCientifico.getSelectedItem();
-        if (ncSelecionado != null && ncSelecionado.getId() != 0) {
-            semente.setNomeCientificoId(ncSelecionado.getId());
-        } else {
-            semente.setNomeCientificoId(null);
-        }
+        semente.setNomeCientificoId(this.nomeCientificoEncontradoId);
 
         semente.setEpocaInicio(tvEpocaInicio.getText().toString());
         semente.setEpocaFim(tvEpocaFim.getText().toString());
@@ -490,15 +487,21 @@ public class DetalheSementeActivity extends AppCompatActivity {
         etNomePopular.setText(semente.getNome());
         etTempoMedio.setText(String.valueOf(semente.getTempoMedioColheita()));
 
-        spNomeCientifico.setSelection(0);
+        // Se a semente tem um ID científico, buscamos no banco para exibir
         if (semente.getNomeCientificoId() != null) {
-            for (int i = 0; i < listaNomesCientificos.size(); i++) {
-                // Ensure null check before comparison
-                if (listaNomesCientificos.get(i) != null && listaNomesCientificos.get(i).getId() == semente.getNomeCientificoId()) {
-                    spNomeCientifico.setSelection(i);
-                    break;
-                }
+            NomeCientifico nc = nomeCientificoDAO.buscarPorId(semente.getNomeCientificoId());
+            if (nc != null) {
+                tvNomeCientificoResultado.setText(nc.getNome());
+                this.nomeCientificoEncontradoId = nc.getId();
+            } else {
+                // ID existe na semente, mas não no banco (ex: foi deletado)
+                tvNomeCientificoResultado.setText("Não encontrado (ID: " + semente.getNomeCientificoId() + ")");
+                this.nomeCientificoEncontradoId = null; // Zera para não salvar lixo
             }
+        } else {
+            // Semente não tem nome científico associado
+            tvNomeCientificoResultado.setText("Não informado");
+            this.nomeCientificoEncontradoId = null;
         }
 
         tvEpocaInicio.setText(semente.getEpocaInicio());
@@ -554,7 +557,7 @@ public class DetalheSementeActivity extends AppCompatActivity {
     }
 
     public void btnClearSementeOnClick(View view){
-        setSementeOnEditText(new Semente());
+
         tvEpocaInicio.setText("");
         tvEpocaInicio.setHint("Data início");
         tvEpocaFim.setText("");
@@ -562,6 +565,8 @@ public class DetalheSementeActivity extends AppCompatActivity {
         tvLatitude.setText("Latitude: (Aguardando...)");
         tvLongitude.setText("Longitude: (Aguardando...)");
         ivImagem.setImageResource(android.R.drawable.ic_menu_gallery);
+        tvNomeCientificoResultado.setText("Não informado");
+        this.nomeCientificoEncontradoId = null;
 
         rgTipoCultivo.clearCheck();
         rgTamanhoPorte.clearCheck();

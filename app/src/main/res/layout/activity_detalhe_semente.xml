@@ -54,13 +54,16 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="4dp"/>
 
-            <Spinner
-                android:id="@+id/spCadastroNomeCientifico"
+            <TextView
+                android:id="@+id/tvNomeCientificoResultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/edit_text_shape"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:text="Não informado"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
