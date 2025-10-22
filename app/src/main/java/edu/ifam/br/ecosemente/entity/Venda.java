@@ -62,4 +62,11 @@ public class Venda {
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
     }
+
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "valorTotal=" + valorTotal +
+                '}';
+    }
 }

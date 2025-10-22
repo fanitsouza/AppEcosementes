@@ -22,6 +22,7 @@ import edu.ifam.br.ecosemente.dto.CompradorDTO;
 import edu.ifam.br.ecosemente.entity.Comprador;
 import edu.ifam.br.ecosemente.interfaces.CompradorAPI;
 import edu.ifam.br.ecosemente.recycler.CompradorAdapter;
+import edu.ifam.br.ecosemente.repository.CompradorDAO;
 import edu.ifam.br.ecosemente.service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +35,7 @@ public class ListCompradorActivity extends AppCompatActivity {
     private ProgressBar pbCompradorList;
     private CompradorAPI compradorAPI;
     private Context context;
+    private CompradorDAO compradorDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class ListCompradorActivity extends AppCompatActivity {
 
         compradorAPI = RetrofitService.createService(CompradorAPI.class);
 
+        compradorDAO = new CompradorDAO(this);
+
         context = this;
 
     }
@@ -77,36 +81,12 @@ public class ListCompradorActivity extends AppCompatActivity {
     }
 
     private void getComprador(){
-        Call<List<CompradorDTO>> call = compradorAPI.getComprador();
+        List<Comprador> compradores = new ArrayList<>();
+        compradores = compradorDAO.listarTodos();
+        compradorAdapter = new CompradorAdapter(compradores, context);
+        recyclerView.setAdapter(compradorAdapter);
+        pbCompradorList.setVisibility(View.INVISIBLE);
 
-        pbCompradorList.setVisibility(View.VISIBLE);
-        call.enqueue(new Callback<List<CompradorDTO>>() {
-            @Override
-            public void onResponse(Call<List<CompradorDTO>> call, Response<List<CompradorDTO>> response) {
-                List<Comprador> compradores = new ArrayList<>();
-
-                if (response.isSuccessful() && response.body() != null) {
-                    List<CompradorDTO> compradorDTOS = response.body();
-                    for (CompradorDTO compradorDTO : compradorDTOS) {
-                        compradores.add(compradorDTO.getComprador());
-                    }
-                } else {
-                    String codigoErro = "Erro: " + response.code();
-                    Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
-                }
-                compradorAdapter = new CompradorAdapter(compradores, context);
-                recyclerView.setAdapter(compradorAdapter);
-
-                pbCompradorList.setVisibility(View.INVISIBLE);
-            }
-            @Override
-            public void onFailure(Call<List<CompradorDTO>> call, Throwable t) {
-                    String failureMessage = "Falha de acesso: " + t.getMessage();
-                    Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-                    pbCompradorList.setVisibility(View.INVISIBLE);
-            }
-
-        });
     }
 
 

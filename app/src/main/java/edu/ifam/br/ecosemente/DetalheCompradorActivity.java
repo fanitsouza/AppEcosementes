@@ -19,6 +19,7 @@ import edu.ifam.br.ecosemente.dto.CompradorDTO;
 import edu.ifam.br.ecosemente.entity.Comprador;
 import edu.ifam.br.ecosemente.entity.Semente;
 import edu.ifam.br.ecosemente.interfaces.CompradorAPI;
+import edu.ifam.br.ecosemente.repository.CompradorDAO;
 import edu.ifam.br.ecosemente.service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +38,7 @@ public class DetalheCompradorActivity extends AppCompatActivity {
     private Button btnConfirmarComprador;
     private CompradorAPI compradorAPI;
     private long id;
+    private CompradorDAO compradorDAO;
 
 
 
@@ -70,6 +72,8 @@ public class DetalheCompradorActivity extends AppCompatActivity {
 
         compradorAPI = RetrofitService.createService(CompradorAPI.class);
 
+        compradorDAO = new CompradorDAO(this);
+
         Intent intent = getIntent();
         if(intent.hasExtra("id")){
             id = intent.getLongExtra("id", 0);
@@ -83,8 +87,9 @@ public class DetalheCompradorActivity extends AppCompatActivity {
             });
 
             btnConfirmarComprador.setOnClickListener(v -> {
-                updateComprador(id);
+                updateComprador();
             });
+            svDetalheComprador.setVisibility(View.VISIBLE);
 
         }else{
             svDetalheComprador.setVisibility(View.VISIBLE);
@@ -105,6 +110,7 @@ public class DetalheCompradorActivity extends AppCompatActivity {
     }
 
     private void setCompradorOnEditText(Comprador comprador){
+        System.out.println(comprador);
         etNomeComprador.setText(comprador.getNome());
         etCpfCnpj.setText(comprador.getCpfCnpj());
         etTelefone.setText(comprador.getTelefone());
@@ -115,111 +121,56 @@ public class DetalheCompradorActivity extends AppCompatActivity {
         setCompradorOnEditText(new Comprador());
     }
 
-    private void getComprador(Long id){
-        Call<CompradorDTO> call =  compradorAPI.getComprador(id);
+    private void getComprador(long id){
+        try {
+            Comprador comprador = compradorDAO.buscarPorId(id);
+            System.out.println(comprador);
+            setCompradorOnEditText(comprador);
+        }catch (Exception e){
+            Toast.makeText(this, "Erro ao salvar comprador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            finish();
+        }
 
-        pbDetalheComprador.setVisibility(View.VISIBLE);
 
-        call.enqueue(new Callback<CompradorDTO>() {
-            @Override
-            public void onResponse(Call<CompradorDTO> call, Response<CompradorDTO> response) {
-
-                Comprador comprador = new Comprador();
-
-                if(response.isSuccessful() && response.body() != null){
-                    CompradorDTO compradorDTO = response.body();
-
-                    comprador = compradorDTO.getComprador();
-                }else{
-                    String codigoErro = "Erro: " + response.code();
-                    Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
-                }
-
-                setCompradorOnEditText(comprador);
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                svDetalheComprador.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<CompradorDTO> call, Throwable t) {
-                String failureMessage = "Falha de acesso: " + t.getMessage();
-                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 
     private void saveComprador(){
-        Comprador comprador = getSementeFromEditText();
+        try {
+            Comprador comprador = getSementeFromEditText();
+            compradorDAO.inserir(comprador);
+            Toast.makeText(this, "Comprador salvo com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(this, "Erro ao salvar comprador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
-        pbDetalheComprador.setVisibility(View.VISIBLE);
-
-        compradorAPI.createComprador(new CompradorDTO(comprador)).enqueue(new Callback<CompradorDTO>() {
-            @Override
-            public void onResponse(Call<CompradorDTO> call, Response<CompradorDTO> response) {
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                if(response.isSuccessful() && response.body() != null){
-                    Toast.makeText(getApplicationContext(), "Comprador adicionada com sucesso!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao adicionar: " + response.code(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CompradorDTO> call, Throwable t) {
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Falha ao adicionar: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
-    private void updateComprador(Long id){
-        Comprador comprador = getSementeFromEditText();
-
-        pbDetalheComprador.setVisibility(View.VISIBLE);
-
-        compradorAPI.updateComprador(id,new CompradorDTO(comprador)).enqueue(new Callback<CompradorDTO>() {
-            @Override
-            public void onResponse(Call<CompradorDTO> call, Response<CompradorDTO> response) {
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                if(response.isSuccessful() && response.body() != null){
-                    Toast.makeText(getApplicationContext(), "Comprador atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao atualizar: " + response.code(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CompradorDTO> call, Throwable t) {
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Falha ao atualizar: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+    private void updateComprador(){
+        try {
+            Comprador comprador = getSementeFromEditText();
+            comprador.setId(id);
+            System.out.println(comprador);
+            compradorDAO.atualizar(comprador);
+            Toast.makeText(this, "Comprador atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(this, "Erro ao atualizar comprador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
-    private void deleteComprador(Long id){
-        pbDetalheComprador.setVisibility(View.VISIBLE);
-        compradorAPI.deleteComprador(id).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                pbDetalheComprador.setVisibility(View.INVISIBLE);
-                if (response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Comprador Excluído", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao excluir: " + response.code(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Falha ao excluir: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+    private void deleteComprador(long id){
+        try {
+            compradorDAO.deletar(id);
+            Toast.makeText(this, "Comprador excluído com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(this, "Erro ao excluir comprador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
 

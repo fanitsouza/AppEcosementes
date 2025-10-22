@@ -44,4 +44,5 @@
     <string name="select_seed">Select a Seed</string>
     <string name="select_buyer">Select a Buyer</string>
     <string name="btnCancelarVenda">Cancel Sale</string>
+    <string name="Scientific_names">Scientific names</string>
 </resources>

@@ -33,7 +33,7 @@
     <string name="cpf_cnpj">CPF/CNPJ</string>
     <string name="phone">Telefone</string>
     <string name="email">Email</string>
-    <string name="sales_list">Lista de Sementes</string>
+    <string name="sales_list">Lista de Vendas</string>
     <string name="add_sale">Adicionar Venda</string>
     <string name="buyerLabel">Comprador:</string>
     <string name="dateLabel">Data:</string>
@@ -44,4 +44,5 @@
     <string name="select_seed">Selecione uma semente</string>
     <string name="select_buyer">Selecione um comprador</string>
     <string name="btnCancelarVenda">Cancelar Venda</string>
+    <string name="Scientific_names">Nomes científicos</string>
 </resources>

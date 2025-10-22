@@ -13,6 +13,7 @@ import android.widget.Button;
 import edu.ifam.br.ecosemente.ListCompradorActivity;
 import edu.ifam.br.ecosemente.ListSementeActivity;
 import edu.ifam.br.ecosemente.ListVendaActivity;
+import edu.ifam.br.ecosemente.NomeCientificoActivity;
 import edu.ifam.br.ecosemente.R;
 
 /**
@@ -74,11 +75,9 @@ public class HomeFragment extends Fragment {
 
         // Encontre a View que será clicada
         View button = view.findViewById(R.id.btnSemente);
-        View buttonComprador = view.findViewById(R.id.btnComprador);
-        View buttonVenda = view.findViewById(R.id.btnVenda);
+        View buttonVenda = view.findViewById(R.id.btnNomesCientificos);
         button.setOnClickListener(v -> gotToSemente());
-        buttonComprador.setOnClickListener(view1 -> goToComprador());
-        buttonVenda.setOnClickListener(v ->goToVenda());
+        buttonVenda.setOnClickListener(v -> goToNomesCientificos());
 
 
 
@@ -96,8 +95,8 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void goToVenda() {
-        Intent intent = new Intent(requireActivity(), ListVendaActivity.class);
+    public void goToNomesCientificos() {
+        Intent intent = new Intent(requireActivity(), NomeCientificoActivity.class);
         startActivity(intent);
     }
 }

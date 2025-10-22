@@ -5,41 +5,43 @@ import androidx.annotation.NonNull;
 public class Semente {
 
     private long id;
-    private String nome;
-    private String descricao;
-    private String especie;
-    private String epocaPlantio;
-    private int tempoMedioColheita;
-    private int quantidade;
-    private String cuidado;
-    private float preco;
+    private String nome; // Nome Popular
+    private Integer tempoMedioColheita;
 
+    // --- MUDANÇA: Alterado de long (primitivo) para Long (Classe) ---
+    private Long nomeCientificoId; // Chave Estrangeira
 
+    private String epocaInicio;
+    private String epocaFim;
+    private String tipoCultivo; // "Natural" ou "Plantada"
+    private String tamanhoPorte; // "Pequeno", "Médio", "Grande"
+    private Double latitude;
+    private Double longitude;
+    private String caminhoImagem;
+
+    private NomeCientifico nomeCientifico;
+
+    /**
+     * Construtor vazio.
+     */
     public Semente() {
+        this.nome = "";
+        this.tempoMedioColheita = 0;
+
+        // --- MUDANÇA: Inicializado como null em vez de 0 ---
+        this.nomeCientificoId = null;
+
+        this.epocaInicio = "";
+        this.epocaFim = "";
+        this.tipoCultivo = "";
+        this.tamanhoPorte = "";
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+        this.caminhoImagem = "";
+        this.nomeCientifico = null;
     }
 
-    public Semente(long id, String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado, float preco) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.especie = especie;
-        this.epocaPlantio = epocaPlantio;
-        this.tempoMedioColheita = tempoMedioColheita;
-        this.quantidade = quantidade;
-        this.cuidado = cuidado;
-        this.preco = preco;
-    }
-
-    public Semente(String nome, String descricao, String especie, String epocaPlantio, int tempoMedioColheita, int quantidade, String cuidado, float preco) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.especie = especie;
-        this.epocaPlantio = epocaPlantio;
-        this.tempoMedioColheita = tempoMedioColheita;
-        this.quantidade = quantidade;
-        this.cuidado = cuidado;
-        this.preco = preco;
-    }
+    // --- Getters e Setters (Apenas para os campos que existem) ---
 
     public long getId() {
         return id;
@@ -57,60 +59,85 @@ public class Semente {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
-
-    public String getEpocaPlantio() {
-        return epocaPlantio;
-    }
-
-    public void setEpocaPlantio(String epocaPlantio) {
-        this.epocaPlantio = epocaPlantio;
-    }
-
-    public int getTempoMedioColheita() {
+    public Integer getTempoMedioColheita() {
         return tempoMedioColheita;
     }
 
-    public void setTempoMedioColheita(int tempoMedioColheita) {
+    public void setTempoMedioColheita(Integer tempoMedioColheita) {
         this.tempoMedioColheita = tempoMedioColheita;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    // --- MUDANÇA: Getters/Setters atualizados para Long ---
+    public Long getNomeCientificoId() {
+        return nomeCientificoId;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setNomeCientificoId(Long nomeCientificoId) {
+        this.nomeCientificoId = nomeCientificoId;
     }
 
-    public String getCuidado() {
-        return cuidado;
+    public String getEpocaInicio() {
+        return epocaInicio;
     }
 
-    public void setCuidado(String cuidado) {
-        this.cuidado = cuidado;
+    public void setEpocaInicio(String epocaInicio) {
+        this.epocaInicio = epocaInicio;
     }
 
-    public float getPreco() {
-        return preco;
+    public String getEpocaFim() {
+        return epocaFim;
     }
 
-    public void setPreco(float preco) {
-        this.preco = preco;
+    public void setEpocaFim(String epocaFim) {
+        this.epocaFim = epocaFim;
+    }
+
+    public String getTipoCultivo() {
+        return tipoCultivo;
+    }
+
+    public void setTipoCultivo(String tipoCultivo) {
+        this.tipoCultivo = tipoCultivo;
+    }
+
+    public String getTamanhoPorte() {
+        return tamanhoPorte;
+    }
+
+    public void setTamanhoPorte(String tamanhoPorte) {
+        this.tamanhoPorte = tamanhoPorte;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCaminhoImagem() {
+        return caminhoImagem;
+    }
+
+    public void setCaminhoImagem(String caminhoImagem) {
+        this.caminhoImagem = caminhoImagem;
+    }
+
+    public NomeCientifico getNomeCientifico() {
+        return nomeCientifico;
+    }
+
+    public void setNomeCientifico(NomeCientifico nomeCientifico) {
+        this.nomeCientifico = nomeCientifico;
     }
 
     @NonNull

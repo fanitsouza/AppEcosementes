@@ -37,6 +37,10 @@ import edu.ifam.br.ecosemente.interfaces.CompradorAPI;
 import edu.ifam.br.ecosemente.interfaces.SementeAPI;
 import edu.ifam.br.ecosemente.interfaces.VendaAPI;
 import edu.ifam.br.ecosemente.recycler.ItemVendaAdapter;
+import edu.ifam.br.ecosemente.repository.CompradorDAO;
+import edu.ifam.br.ecosemente.repository.ItemVendaDAO;
+import edu.ifam.br.ecosemente.repository.SementeDAO;
+import edu.ifam.br.ecosemente.repository.VendaDAO;
 import edu.ifam.br.ecosemente.service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,8 +66,12 @@ public class DetalheVendaActivity extends AppCompatActivity {
     private SementeAPI sementeAPI;
     private VendaAPI vendaAPI;
     private Context context;
-    private Long id;
+    private long id;
     private String cpfCnpj;
+    private VendaDAO vendaDAO;
+    private ItemVendaDAO itemVendaDAO;
+    private SementeDAO sementeDAO;
+    private CompradorDAO compradorDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,11 @@ public class DetalheVendaActivity extends AppCompatActivity {
         itemVendas = new ArrayList<>();
         compradores = new ArrayList<>();
         cpfCnpj = "";
+
+        vendaDAO = new VendaDAO(this);
+        itemVendaDAO = new ItemVendaDAO(this);
+        compradorDAO = new CompradorDAO(this);
+        sementeDAO = new SementeDAO(this);
 
 
         tvComprador = findViewById(R.id.tv_detalhaVendaComprador);
@@ -110,8 +123,9 @@ public class DetalheVendaActivity extends AppCompatActivity {
             addItem();
         });
 
-
+        System.out.println("Executando getComprador");
         getComprador();
+        System.out.println("getComprador foi executado");
         getSementes();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -152,7 +166,7 @@ public class DetalheVendaActivity extends AppCompatActivity {
     private Venda getVendaFromComponentes(){
         Comprador comprador;
         System.out.println("Debug de getVendaFromComponentes: "+cpfCnpj);
-        if(id == null){
+        if(id == 0){
             comprador = (Comprador) spinnerComprador.getSelectedItem();
         }else{
             comprador = compradores.stream()
@@ -164,9 +178,11 @@ public class DetalheVendaActivity extends AppCompatActivity {
 
         Venda venda = new Venda();
         venda.setDataVenda(new Date());
+        System.out.println(comprador);
         venda.setComprador(comprador);
         // Obtenha os itens do adaptador
         List<ItemVenda> itensVenda = itemVendaAdapter.getItemVendas();
+
 
         // Valide e processe os itens
         for (ItemVenda item : itensVenda) {
@@ -206,64 +222,48 @@ public class DetalheVendaActivity extends AppCompatActivity {
 
 
     private void getComprador() {
-        Call<List<CompradorDTO>> call = compradorAPI.getComprador();
-
         pbDetalheVenda.setVisibility(View.VISIBLE);
-        call.enqueue(new Callback<List<CompradorDTO>>() {
+
+        compradores.clear();
+        Comprador placeHolder = new Comprador();
+        placeHolder.setNome(getResources().getString(R.string.select_buyer));
+        compradores.add(placeHolder);
+
+        List<Comprador> compradorList = compradorDAO.listarTodos();
+        for(Comprador comprador : compradorList){
+            System.out.println("Listando Compradores: " + comprador);// novo método no DAO
+        }
+        compradores.addAll(compradorList);
+
+        ArrayAdapter<Comprador> spinnerAdapter = new ArrayAdapter<Comprador>(
+                context,
+                android.R.layout.simple_spinner_item,
+                compradores
+        ){
             @Override
-            public void onResponse(Call<List<CompradorDTO>> call, Response<List<CompradorDTO>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    compradores.clear();
-                    Comprador placeHolder = new Comprador();
-                    placeHolder.setNome(getResources().getString(R.string.select_buyer));
-                    compradores.add(placeHolder);
-                    List<CompradorDTO> compradorDTOS = response.body();
-                    for (CompradorDTO compradorDTO : compradorDTOS) {
-                        compradores.add(compradorDTO.getComprador());
-                    }
-                    ArrayAdapter<Comprador> spinnerAdapter = new ArrayAdapter<Comprador>(
-                            context,
-                            android.R.layout.simple_spinner_item,
-                            compradores
-                    ){
-                        @Override
-                        public boolean isEnabled(int position){
-                            return position != 0;
-                        }
+            public boolean isEnabled(int position){
+                return position != 0;
+            }
 
-                        @Override
-                        public View getView(int position, View viewConverter, ViewGroup parent){
-                            View view = super.getDropDownView(position, viewConverter, parent);
-                            TextView tv = (TextView) view;
-                            if(position == 0){
-                                tv.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                            }else{
-                                tv.setTextColor(getResources().getColor(R.color.green));
-                            }
-                            return view;
-                        }
-
-                    };
-
-                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerComprador.setAdapter(spinnerAdapter);
-                    spinnerComprador.setSelection(0);
-
-                } else {
-                    String codigoErro = "Erro: " + response.code();
-                    Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
+            @Override
+            public View getView(int position, View viewConverter, ViewGroup parent){
+                View view = super.getDropDownView(position, viewConverter, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    tv.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }else{
+                    tv.setTextColor(getResources().getColor(R.color.green));
                 }
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
+                return view;
             }
+        };
 
-            @Override
-            public void onFailure(Call<List<CompradorDTO>> call, Throwable t) {
-                String failureMessage = "Falha de acesso: " + t.getMessage();
-                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-            }
-        });
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerComprador.setAdapter(spinnerAdapter);
+        spinnerComprador.setSelection(0);
+        pbDetalheVenda.setVisibility(View.INVISIBLE);
     }
+
 
     public void cancelOnClick(){
         finish();
@@ -272,152 +272,79 @@ public class DetalheVendaActivity extends AppCompatActivity {
 
 
     private void getSementes(){
-        Call<List<SementeDTO>> call = sementeAPI.getSemente();
 
-        pbDetalheVenda.setVisibility(View.VISIBLE);
 
-        call.enqueue(new Callback<List<SementeDTO>>() {
-            @Override
-            public void onResponse(Call<List<SementeDTO>> call, Response<List<SementeDTO>> response) {
+        sementesList = new ArrayList<>();
+        Semente placeHolder = new Semente();
+        placeHolder.setNome(getResources().getString(R.string.select_seed));
+        sementesList.add(placeHolder);
 
-                List<Semente> sementes = new ArrayList<>();
+        List<Semente> sementes = sementeDAO.getSemente(); // novo método no DAO
+        sementesList.addAll(sementes);
 
-                if(response.isSuccessful() && response.body() != null){
-                    Semente placeHolder = new Semente();
-                    placeHolder.setNome(getResources().getString(R.string.select_seed));
-                    sementes.add(placeHolder);
-                    List<SementeDTO> sementeDTOS = response.body();
-                    for(SementeDTO sementeDTO : sementeDTOS){
-                        sementes.add(sementeDTO.getSemente());
-                    }
-                }else{
-                    String codigoErro = "Erro: " + response.code();
-                    Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
-                }
+        itemVendaAdapter = new ItemVendaAdapter(sementesList, itemVendas, context,tvValorTotal);
+        recyclerView.setAdapter(itemVendaAdapter);
 
-                itemVendaAdapter = new ItemVendaAdapter(sementes,itemVendas, context, tvValorTotal);
-                recyclerView.setAdapter(itemVendaAdapter);
 
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<List<SementeDTO>> call, Throwable t) {
-                String failureMessage = "Falha de acesso: " + t.getMessage();
-                Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 
-    private void getVenda(Long id){
-        Call<VendaOutputDTO> call = vendaAPI.getVenda(id);
-
-        pbDetalheVenda.setVisibility(View.VISIBLE);
-
-         call.enqueue(new Callback<VendaOutputDTO>() {
-             @Override
-             public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
-                 Venda venda = new Venda();
-                 if(response.isSuccessful() && response.body() != null){
-                     VendaOutputDTO vendaOutputDTO = response.body();
-
-                     venda = vendaOutputDTO.getVenda();
-
-                 }else{
-                     String codigoErro = "Erro: " + response.code();
-                     Toast.makeText(getApplicationContext(), codigoErro, Toast.LENGTH_LONG).show();
-                 }
-                 cpfCnpj = venda.getComprador().getCpfCnpj();
-                 System.out.println(cpfCnpj);
-                 setVendaOnComponentes(venda);
-                 pbDetalheVenda.setVisibility(View.INVISIBLE);
-                 scrollView.setVisibility(View.VISIBLE);
-             }
-
-             @Override
-             public void onFailure(Call<VendaOutputDTO> call, Throwable t) {
-                 String failureMessage = "Falha de acesso: " + t.getMessage();
-                 Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-             }
-         });
+    private void getVenda(long id) {
+        Venda venda = vendaDAO.buscarPorId(id);
+        if (venda != null) {
+            venda.setItens(itemVendaDAO.buscarItensPorVendaId(id));
+            setVendaOnComponentes(venda);
+            scrollView.setVisibility(View.VISIBLE);
+        } else {
+            Toast.makeText(this, "Venda não encontrada", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
-    public void saveVenda(){
-        Call<VendaOutputDTO> call = vendaAPI.setVenda(new VendaInputDTO(getVendaFromComponentes()));
-        pbDetalheVenda.setVisibility(View.VISIBLE);
 
-        call.enqueue(new Callback<VendaOutputDTO>() {
-            @Override
-            public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                if(response.isSuccessful() && response.body() != null){
-                    Toast.makeText(getApplicationContext(), "Venda adicionada com sucesso!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao adicionar: " + response.code(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
+    private void saveVenda() {
+        Venda novaVenda = getVendaFromComponentes();
+        novaVenda.setDataVenda(new Date());
+        int vendaId = vendaDAO.inserir(novaVenda);
+        if (vendaId > 0) {
+            for (ItemVenda item : novaVenda.getItens()) {
+                item.setVendaId(vendaId);
+                itemVendaDAO.inserir(item);
             }
-
-            @Override
-            public void onFailure(Call<VendaOutputDTO> call, Throwable t) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Falha ao adicionar: " + t.getMessage(), Toast.LENGTH_LONG).show();
-
-            }
-        });
+            Toast.makeText(this, "Venda salva com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Erro ao salvar venda.", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void updateVenda(Long id){
-        Call<VendaOutputDTO> call = vendaAPI.updateVenda(id, new VendaInputDTO(getVendaFromComponentes()));
-        pbDetalheVenda.setVisibility(View.VISIBLE);
-        call.enqueue(new Callback<VendaOutputDTO>() {
-            @Override
-            public void onResponse(Call<VendaOutputDTO> call, Response<VendaOutputDTO> response) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                if(response.isSuccessful() && response.body() != null){
-                    Toast.makeText(getApplicationContext(), "Venda atualizada com sucesso!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao atualizar: " + response.code(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<VendaOutputDTO> call, Throwable t) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Falha ao adicionar: " + t.getMessage(), Toast.LENGTH_LONG).show();
+    private void updateVenda(long id) {
+        Venda vendaAtualizada = getVendaFromComponentes();
+        vendaAtualizada.setId(id);
 
+        if (vendaDAO.atualizar(vendaAtualizada) !=0) {
+            itemVendaDAO.deletar(id); // limpa os itens antigos
+            for (ItemVenda item : vendaAtualizada.getItens()) {
+                item.setVendaId(id);
+                itemVendaDAO.inserir(item);
             }
-        });
+            Toast.makeText(this, "Venda atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Erro ao atualizar venda.", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void deleteVenda(Long id){
-        Call<Void> call = vendaAPI.deleteVenda(id);
-        pbDetalheVenda.setVisibility(View.VISIBLE);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Venda deleta com sucesso!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Erro ao deletar: " + response.code(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                pbDetalheVenda.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Falha ao deletear: " + t.getMessage(), Toast.LENGTH_LONG).show();
-
-            }
-        });
+    private void deleteVenda(long id) {
+        itemVendaDAO.deletar(id); // Deleta itens primeiro
+        if (vendaDAO.deletar(id) != 0) {
+            Toast.makeText(this, "Venda deletada com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Erro ao deletar venda.", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
 }

@@ -13,15 +13,54 @@ import edu.ifam.br.ecosemente.entity.Semente;
 
 public class SementeDAO {
 
+    private BDEcoSemente helper;
     private SQLiteDatabase sqLiteDatabase;
-    private SementeDAO(){}
 
     public SementeDAO(Context context){
-        BDEcoSemente bdEcoSemente = new BDEcoSemente(context, "ecosemente", null, 1);
-        sqLiteDatabase = bdEcoSemente.getWritableDatabase();
+        helper = new BDEcoSemente(context);
     }
 
+    public void open() {
+        sqLiteDatabase = helper.getWritableDatabase();
+    }
+
+    public void close() {
+        helper.close();
+    }
+
+    /**
+     * Converte a linha atual do Cursor em um objeto Semente.
+     */
     @SuppressLint("Range")
+    private Semente cursorToSemente(Cursor cSementes) {
+        Semente semente = new Semente();
+
+        semente.setId(cSementes.getLong(cSementes.getColumnIndex("id")));
+        semente.setNome(cSementes.getString(cSementes.getColumnIndex("nome")));
+        semente.setTempoMedioColheita(cSementes.getInt(cSementes.getColumnIndex("tempo_medio_colheita")));
+
+        // --- MUDANÇA: Checa se o valor é NULL no banco ---
+        if (cSementes.isNull(cSementes.getColumnIndex("nome_cientifico_id"))) {
+            semente.setNomeCientificoId(null);
+        } else {
+            semente.setNomeCientificoId(cSementes.getLong(cSementes.getColumnIndex("nome_cientifico_id")));
+        }
+        // --- Fim da Mudança ---
+
+        semente.setEpocaInicio(cSementes.getString(cSementes.getColumnIndex("epoca_inicio")));
+        semente.setEpocaFim(cSementes.getString(cSementes.getColumnIndex("epoca_fim")));
+        semente.setTipoCultivo(cSementes.getString(cSementes.getColumnIndex("tipo_cultivo")));
+        semente.setTamanhoPorte(cSementes.getString(cSementes.getColumnIndex("tamanho_porte")));
+        semente.setLatitude(cSementes.getDouble(cSementes.getColumnIndex("latitude")));
+        semente.setLongitude(cSementes.getDouble(cSementes.getColumnIndex("longitude")));
+        semente.setCaminhoImagem(cSementes.getString(cSementes.getColumnIndex("caminho_imagem")));
+
+        return semente;
+    }
+
+    /**
+     * Retorna uma lista de todas as sementes.
+     */
     public List<Semente> getSemente(){
         List<Semente> sementes = new ArrayList<>();
         String sql = "SELECT * FROM semente";
@@ -29,87 +68,73 @@ public class SementeDAO {
 
         if(cSementes.moveToFirst()){
             do {
-                Semente semente = new Semente();
-                semente.setId(cSementes.getLong(cSementes.getColumnIndex("id")));
-                semente.setNome(cSementes.getString(cSementes.getColumnIndex("nome")));
-                semente.setDescricao(cSementes.getString(cSementes.getColumnIndex("descricao")));
-                semente.setEspecie(cSementes.getString(cSementes.getColumnIndex("especie")));
-                semente.setEpocaPlantio(cSementes.getString(cSementes.getColumnIndex("epocaPlantio")));
-                semente.setTempoMedioColheita(cSementes.getInt(cSementes.getColumnIndex("tempoMedio")));
-                semente.setQuantidade(cSementes.getInt(cSementes.getColumnIndex("quantidade")));
-                semente.setCuidado(cSementes.getString(cSementes.getColumnIndex("cuidados")));
-                semente.setPreco(cSementes.getFloat(cSementes.getColumnIndex("preco")));
-
-                sementes.add(semente);
-            }while(cSementes.moveToNext());
+                sementes.add(cursorToSemente(cSementes));
+            } while(cSementes.moveToNext());
         }
-
+        cSementes.close();
         return sementes;
     }
 
-    @SuppressLint("Range")
+    /**
+     * Retorna uma semente específica pelo seu ID.
+     */
     public Semente getSemente(Long id){
         String sql = " SELECT * FROM semente WHERE id = ? ";
         String[] selectionArgs = {Long.toString(id)};
         Cursor cSementes = sqLiteDatabase.rawQuery(sql, selectionArgs);
-        Semente semente = new Semente();
+        Semente semente = null;
 
         if(cSementes.moveToFirst()){
-
-                semente.setId(cSementes.getLong(cSementes.getColumnIndex("id")));
-                semente.setNome(cSementes.getString(cSementes.getColumnIndex("nome")));
-                semente.setDescricao(cSementes.getString(cSementes.getColumnIndex("descricao")));
-                semente.setEspecie(cSementes.getString(cSementes.getColumnIndex("especie")));
-                semente.setEpocaPlantio(cSementes.getString(cSementes.getColumnIndex("epocaPlantio")));
-                semente.setTempoMedioColheita(cSementes.getInt(cSementes.getColumnIndex("tempoMedio")));
-                semente.setQuantidade(cSementes.getInt(cSementes.getColumnIndex("quantidade")));
-                semente.setCuidado(cSementes.getString(cSementes.getColumnIndex("cuidados")));
-                semente.setPreco(cSementes.getFloat(cSementes.getColumnIndex("preco")));
-
+            semente = cursorToSemente(cSementes);
         }
-
+        cSementes.close();
         return semente;
     }
 
-    public void insert(Semente semente){
+    /**
+     * Coleta todos os dados do objeto Semente para inserir no banco.
+     */
+    private ContentValues sementeToContentValues(Semente semente) {
         ContentValues cv = new ContentValues();
+
         cv.put("nome", semente.getNome());
-        cv.put("descricao", semente.getDescricao());
-        cv.put("especie", semente.getEspecie());
-        cv.put("epocaPlantio", semente.getEpocaPlantio());
-        cv.put("tempoMedio", semente.getTempoMedioColheita());
-        cv.put("quantidade", semente.getQuantidade());
-        cv.put("cuidados", semente.getCuidado());
-        cv.put("preco",semente.getPreco());
+        cv.put("tempo_medio_colheita", semente.getTempoMedioColheita());
 
+        // --- Campos REMOVIDOS ---
+        // cv.put("descricao", semente.getDescricao());
+        // cv.put("especie", semente.getEspecie());
+        // cv.put("quantidade", semente.getQuantidade());
+        // cv.put("cuidado", semente.getCuidado());
+        // cv.put("preco", semente.getPreco());
+
+        // --- Novos Campos (v7) ---
+        cv.put("nome_cientifico_id", semente.getNomeCientificoId());
+        cv.put("epoca_inicio", semente.getEpocaInicio());
+        cv.put("epoca_fim", semente.getEpocaFim());
+        cv.put("tipo_cultivo", semente.getTipoCultivo());
+        cv.put("tamanho_porte", semente.getTamanhoPorte());
+        cv.put("latitude", semente.getLatitude());
+        cv.put("longitude", semente.getLongitude());
+        cv.put("caminho_imagem", semente.getCaminhoImagem());
+
+        return cv;
+    }
+
+    public void insert(Semente semente){
+        ContentValues cv = sementeToContentValues(semente);
         sqLiteDatabase.insert("semente", null, cv);
-
     }
 
     public void update(long id, Semente semente){
-        ContentValues cv = new ContentValues();
-        cv.put("nome", semente.getNome());
-        cv.put("descricao", semente.getDescricao());
-        cv.put("especie", semente.getEspecie());
-        cv.put("epocaPlantio", semente.getEpocaPlantio());
-        cv.put("tempoMedio", semente.getTempoMedioColheita());
-        cv.put("quantidade", semente.getQuantidade());
-        cv.put("cuidados", semente.getCuidado());
-        cv.put("preco",semente.getPreco());
-
-
-        String whereClause = "id =?";
-
+        ContentValues cv = sementeToContentValues(semente);
+        String whereClause = "id = ?";
         String[] whereArgs = {Long.toString(id)};
-
-        sqLiteDatabase.update("semente",cv,whereClause,whereArgs);
-
+        sqLiteDatabase.update("semente", cv, whereClause, whereArgs);
     }
 
     public void delete(long id){
         String whereClause = "id = ?";
-        String[] whereArgs ={Long.toString(id)};
+        String[] whereArgs = {Long.toString(id)};
         sqLiteDatabase.delete("semente", whereClause, whereArgs);
     }
-
 }

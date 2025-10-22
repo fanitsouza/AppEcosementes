@@ -6,134 +6,263 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".DetalheSementeActivity">
-
-    <TextView
-        android:id="@+id/tv_add_semente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/header"
-        android:text="@string/add_sale"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".DetalheSementeActivity"> <TextView
+    android:id="@+id/tv_cadastro_header"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/header"
+    android:text="Cadastro"
+    android:textAlignment="center"
+    android:textColor="@color/white"
+    android:textSize="34sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/svDetalheSemente"
+        android:id="@+id/svCadastroSemente"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_add_semente">
+        app:layout_constraintTop_toBottomOf="@+id/tv_cadastro_header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <EditText
-                android:id="@+id/etDetalheSementeNomeSemente"
+                android:id="@+id/etCadastroNomePopular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/edit_text_shape"
-                android:hint="@string/seed_name"
+                android:hint="Nome popular"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
 
-            <EditText
-                android:id="@+id/etDetalheSementeDescricaoSemente"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:text="Nome científico"
+                android:textColor="@color/green"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"/>
+
+            <Spinner
+                android:id="@+id/spCadastroNomeCientifico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/edit_text_shape"
-                android:hint="@string/seed_description"
-                android:inputType="text"
-                android:padding="12dp"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Época frutífera"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tvDetalheSementeEpocaInicio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/edit_text_shape"
+                    android:hint="Data início"
+                    android:padding="12dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/green"
+                    android:textSize="18sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/tvDetalheSementeEpocaFim"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/edit_text_shape"
+                    android:hint="Data fim"
+                    android:padding="12dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/green"
+                    android:textSize="18sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rgCadastroTipoCultivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <RadioButton
+                    android:id="@+id/rbCadastroNatural"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Natural"
+                    android:textColor="@color/green" />
+
+                <RadioButton
+                    android:id="@+id/rbCadastroPlantada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plantada"
+                    android:textColor="@color/green" />
+            </RadioGroup>
+            <EditText
+                android:id="@+id/etCadastroTempoMedioColheita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edit_text_shape"
+                android:hint="Tempo médio colheita"
+                android:inputType="number" android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/green" />
 
-            <EditText
-                android:id="@+id/etDetalheSementeEspecieSemente"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/species_seed"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                android:text="Tamanho"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/etDetalheSementeEpocaPlantio"
+            <RadioGroup
+                android:id="@+id/rgCadastroTamanhoPorte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/planting_time"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                android:layout_marginBottom="16dp">
 
-            <EditText
-                android:id="@+id/etDetalheSementeTempoMedio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/average_time"
-                android:inputType="number"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                <RadioButton
+                    android:id="@+id/rbCadastroTamanhoPequeno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pequeno porte"
+                    android:textColor="@color/green" />
 
-            <EditText
-                android:id="@+id/etDetalheSementeQuantidade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/quantity"
-                android:inputType="number"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                <RadioButton
+                    android:id="@+id/rbCadastroTamanhoMedio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Médio porte"
+                    android:textColor="@color/green" />
 
-            <EditText
-                android:id="@+id/etDetalheSementeCuidados"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/care"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                <RadioButton
+                    android:id="@+id/rbCadastroTamanhoGrande"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grande porte"
+                    android:textColor="@color/green" />
+            </RadioGroup>
 
-            <EditText
-                android:id="@+id/etDetalheSementePreco"
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:text="Coordenadas geográficas"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:background="@drawable/edit_text_shape"
-                android:hint="@string/price"
-                android:inputType="numberDecimal"
                 android:padding="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/green" />
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:id="@+id/tvDetalheSementeLatitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Latitude: (Aguardando...)"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/tvDetalheSementeLongitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Longitude: (Aguardando...)"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCapturarCoordenadas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capturar Coordenadas"
+                android:background="@drawable/background_button"
+                android:textColor="@color/green"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adicionar imagem"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <ImageView
+                android:id="@+id/ivDetalheSementeImagem"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:scaleType="centerCrop"
+                android:background="@drawable/edit_text_shape"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="Imagem da semente" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="24dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnTirarFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tirar foto"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/green"
+                    android:layout_margin="8dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnGaleria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Galeria"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/green"
+                    android:layout_margin="8dp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,43 +272,41 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLimpar"
+                    android:id="@+id/btnCadastroLimpar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/background_button"
-                    android:onClick="btnClearSementeOnClick"
-                    android:text="@string/btn_clean"
+                    android:text="Limpar"
+                    android:textColor="@color/green" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/background_button"
+                    android:text="Deletar"
                     android:textColor="@color/green" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnDeletar"
+                    android:id="@+id/btnCadastroConfirmar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/background_button"
-                    android:onClick="btnDeleteSementeOnClick"
-                    android:text="@string/btn_delete"
-                    android:textColor="@color/green" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnConfirmar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/background_button"
-                    android:text="@string/btn_confirm"
+                    android:text="Confirmar"
                     android:textColor="@color/green" />
             </LinearLayout>
 
-
         </LinearLayout>
     </ScrollView>
+
     <ProgressBar
-        android:id="@+id/pbDetalheSemente"
+        android:id="@+id/pbCadastroSemente"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

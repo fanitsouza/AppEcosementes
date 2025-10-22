@@ -9,7 +9,7 @@ public class RetrofitService {
     public static <S> S createService(Class<S> serviceClass) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.100.38.204:8080/api/")
+                    .baseUrl("http://10.100.81.89:8080/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

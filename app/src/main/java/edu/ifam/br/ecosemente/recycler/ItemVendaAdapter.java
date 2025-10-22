@@ -42,14 +42,6 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaViewHolder> 
     public List<ItemVenda> getItemVendas() {
         return itemVendas;
     }
-    public float getPrecoTotal(){
-        float precoTotal =0;
-        for(ItemVenda itemVenda : itemVendas){
-            precoTotal += itemVenda.getPrecoItem();
-        }
-
-        return  precoTotal;
-    }
 
         @NonNull
     @Override
@@ -123,12 +115,10 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaViewHolder> 
         holder.etQuantidade.setText(String.valueOf(itemVenda.getQuantidade()));
         holder.tvPreco.setText(String.format("R$ %.2f", itemVenda.getPrecoItem()));
 
-        // Adiciona um Listener para capturar mudanças no EditText de quantidade, se necessário
-        // Adiciona um Listener para capturar mudanças no EditText de quantidade, se necessário
+
         holder.etQuantidade.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Não é necessário implementar
             }
 
             @Override
@@ -139,7 +129,7 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaViewHolder> 
 
                     // Recalcula o preço com base na quantidade
                     if (itemVenda.getSemente() != null) {
-                        float precoUnitario = itemVenda.getSemente().getPreco(); // Obtém o preço da semente
+                        float precoUnitario =0; // Obtém o preço da semente
                         float precoItem = precoUnitario * quantidade;
 
                         // Atualiza o TextView do preço do item
@@ -178,7 +168,7 @@ public class ItemVendaAdapter extends RecyclerView.Adapter<ItemVendaViewHolder> 
 
         for (ItemVenda item : itemVendas) {
             if (item.getSemente() != null) {
-                valorTotal += item.getSemente().getPreco() * item.getQuantidade();  // Certifique-se de multiplicar corretamente com float
+                valorTotal += 0 * item.getQuantidade();  // Certifique-se de multiplicar corretamente com float
             }
         }
 

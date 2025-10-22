@@ -64,6 +64,6 @@ public class Comprador {
     @NonNull
     @Override
     public String toString() {
-        return this.nome;
+        return nome ;
     }
 }

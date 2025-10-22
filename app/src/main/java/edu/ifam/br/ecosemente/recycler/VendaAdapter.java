@@ -43,7 +43,6 @@ public class VendaAdapter extends RecyclerView.Adapter<VendaViewHolder> {
     public void onBindViewHolder(@NonNull VendaViewHolder holder, int position) {
         Venda venda = vendas.get(position);
 
-
         holder.tv_nomeComprador.setText(holder.tv_nomeComprador.getText().toString() + " " + venda.getComprador().getNome());
 
         String data = DATE_FORMAT.format(venda.getDataVenda());
